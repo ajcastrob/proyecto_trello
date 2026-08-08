@@ -15,6 +15,10 @@ class Board(models.Model):
         auto_now_add=True, verbose_name="Fecha de creación"
     )
 
+    class Meta:
+        verbose_name = "Tablero"
+        verbose_name_plural = "Tableros"
+
     def __str__(self):
         return self.title
 
@@ -23,6 +27,10 @@ class TaskList(models.Model):
     board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name="lists")
     title = models.CharField(max_length=120)
     position = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "lista tarea"
+        verbose_name_plural = "lista de tareas"
 
     def __str__(self):
         return f"{self.board.title} - {self.title}"
@@ -38,6 +46,10 @@ class Task(models.Model):
     created_at = models.DateTimeField(
         verbose_name="Fecha de creación", auto_now_add=True
     )
+
+    class Meta:
+        verbose_name = "tarea"
+        verbose_name_plural = "tareas"
 
     def __str__(self):
         return self.title
