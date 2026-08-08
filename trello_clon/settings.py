@@ -33,16 +33,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "tailwind",
+    "theme",
     "debug_toolbar",
     "accounts",
     "boards",
 ]
+
+TAILWIND_APP_NAME = "theme"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -52,6 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "trello_clon.urls"
@@ -137,3 +143,15 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+
+# Modelo para autentificar
+AUTH_USER_MODEL = "accounts.UserProfile"
+
+
+UNFOLD = {
+    "SITE_TITLE": "Trello-clon",
+    "SITE_HEADER": "TrelloApp",
+    "SITE_SUBHEADER": "Panel de Administración",
+    "SITE_URL": "/",
+}

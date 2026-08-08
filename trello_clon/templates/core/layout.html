@@ -1,18 +1,23 @@
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block head_title %}Título base{% endblock %}</title>
+{% tailwind_css %}
 </head>
-  <body>
-    <h1>{% block head_h1 %}Título base{% endblock %}</h1>
-    
-    {% include "_includes/_main_menu.html" %}
-    
-    {% block page_content%}
-    
-    {% endblock %}
-    {% include "_includes/_footer.html" %}
+  <body class="bg-stone-950 text-stone-100 font-sans antialiased relative flex flex-col min-h-screen"> 
+      <main class="flex-1 w-full">
+          <div class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
+              <h1>{% block head_h1 %}Título base{% endblock %}</h1>
+            
+                  {% include "_includes/_main_menu.html" %} 
+                  {% block page_content%} 
+                  {% endblock %}
+                  {% include "_includes/_footer.html" %}
+
+          </div>  
+      </main>
   </body>
 </html>
