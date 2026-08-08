@@ -1,4 +1,6 @@
 asgiref==3.12.1
 Django==6.1
 django-debug-toolbar==7.0.0
+django-unfold==0.103.0
+pillow==12.3.0
 sqlparse==0.5.5
