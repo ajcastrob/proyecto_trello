@@ -22,7 +22,7 @@ class UserProfileAdmin(BaseUserAdmin, ModelAdmin):
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
 
-    list_display = ("username", "email", "is_staff", "is_active")
+    list_display = ("username", "pk", "email", "is_staff", "is_active")
     search_fields = ("username", "email", "first_name", "last_name")
     ordering = ("username",)
 

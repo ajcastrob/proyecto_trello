@@ -21,6 +21,7 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.conf.urls.static import static
 from trello_clon.views import HomeView, LoginView, RegisterView, logout_view
+from boards.views import BoardDetailView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,6 +29,7 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", logout_view, name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
+    path("board/list/", BoardDetailView.as_view(), name="board_list"),
 ] + debug_toolbar_urls()
 
 
