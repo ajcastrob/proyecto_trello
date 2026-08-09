@@ -55,12 +55,15 @@
           {% else %}
 
               <li>
-                <a
-                  href="{% url 'logout' %}"
-                  class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-stone-300 hover:text-white hover:bg-stone-800/80 active:bg-stone-800 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
-                >
-                  Logout
-                </a>
+                  <form method="post" action="{% url 'logout' %}">
+                      {% csrf_token %}
+                      <button 
+                        type="submit"
+                        class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-stone-300 hover:text-white hover:bg-stone-800/80 active:bg-stone-800 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+                      >
+                        Logout
+                      </button>
+                  </form>
               </li>
               <li class="hidden sm:block">
                 <span class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm text-stone-400">

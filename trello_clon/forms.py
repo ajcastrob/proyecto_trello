@@ -38,7 +38,7 @@ class UserModelFormCreate(ModelForm):
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-        max_length=140,
+        max_length=50,
         label="Nombre del usuario",
         widget=forms.TextInput(
             attrs={"class": INPUT_CLASSES, "placeholder": "Nombre de usuario"}

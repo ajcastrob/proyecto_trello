@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -155,3 +156,8 @@ UNFOLD = {
     "SITE_SUBHEADER": "Panel de Administración",
     "SITE_URL": "/",
 }
+
+# Variables de login
+LOGIN_URL = reverse_lazy("login")
+LOGIN_REDIRECT_URL = reverse_lazy("home")  # Vista tras un registro exitoso
+LOGOUT_REDIRECT_URL = reverse_lazy("home")  # Vista tras un un registor fallido.

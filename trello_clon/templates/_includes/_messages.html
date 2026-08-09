@@ -1,29 +1,28 @@
 {% if messages %}
      <section>
-        <ul>
-        {% for message in messages%}
-        <div class="bg-stone-900  border border-stone-800 rounded-xl p-4 sm:p-6 mb-5">
-           <li class="">
-             {% if message.tags == "success" %}
-              <p class="text-[#0095F6]  text-center text-lg">  
-                 {{message}}
-              </p>
+      <div class="bg-stone-900  border border-stone-800 rounded-xl p-4 sm:p-6 mb-5">
+            <ul>
+            {% for message in messages%}
+              <li class="">
+                {% if message.tags == "success" %}
+                  <p class="text-[#0095F6]  text-center text-lg">  
+                    {{message}}
+                  </p>
 
-             {% elif message.tags == "info" %}
-              <p class="text-green-300 text-center text-lg">  
-                 {{message}}
-              </p>
-              
-              {% else %}
-                <p class="text-red-400  text-center text-lg">  
-                  {{message}}
-                 </p>
-              {% endif %}
-
-            </li>   
-         </div>
-        {% endfor %}
-        </ul>
+                {% elif message.tags == "info" %}
+                  <p class="text-green-300 text-center text-lg">  
+                    {{message}}
+                  </p>
+                  
+                  {% else %}
+                    <p class="text-red-400  text-center text-lg">  
+                      {{message}}
+                    </p>
+                  {% endif %}
+                </li>   
+            {% endfor %}
+            </ul>
+        </div>
       </section>
 {% endif %}
 
