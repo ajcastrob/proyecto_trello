@@ -18,13 +18,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from debug_toolbar.toolbar import debug_toolbar_urls
-from trello_clon.views import HomeView
 from django.conf import settings
 from django.conf.urls.static import static
+from trello_clon.views import HomeView, LoginView, RegisterView, logout_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", HomeView.as_view(), name="home"),
+    path("login/", LoginView.as_view(), name="login"),
+    path("logout/", logout_view, name="logout"),
+    path("register/", RegisterView.as_view(), name="register"),
 ] + debug_toolbar_urls()
 
 

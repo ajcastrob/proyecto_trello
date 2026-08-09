@@ -1,0 +1,37 @@
+{% extends "core/layout.html" %}
+
+{% block head_title %} Página  Login{% endblock %}
+
+{% block page_content %}
+
+<div class="max-w-sm mx-auto">
+    <div class="bg-stone-900 mt-[120px] border border-stone-800 rounded-xl p-6 sm:p-8">
+      <h1 class="text-center text-2xl font-bold bg-gradient-to-r from-amber-400 via-pink-500 to-purple-600 bg-clip-text text-transparent mb-1">TaskApp</h1>
+      <p class="text-center text-stone-400 text-sm mb-6">Ingresa tus credenciales</p>
+
+      <form action="" method="POST" class="space-y-4 ">
+        {% csrf_token %}
+
+        {% for field in form.visible_fields %}
+          <div>
+            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-stone-300 mb-1">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}
+              <p class="text-red-400 text-sm mt-1">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+
+        {% for error in form.non_field_errors %}
+          <p class="text-red-400 text-sm">{{ error }}</p>
+        {% endfor %}
+
+        <button type="submit" class="w-full bg-[#0095F6] hover:bg-[#0077d6] text-white font-semibold rounded-lg py-2.5">
+            Iniciar sesión 
+        </button>
+      </form>
+    </div>
+
+    </div>
+
+  {% endblock %}
