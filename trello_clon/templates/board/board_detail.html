@@ -1,0 +1,17 @@
+{% extends "core/layout.html" %}
+
+{% block head_title %}Mis tableros{% endblock %}
+
+{% block page_content %}
+  <div class="w-full">
+      <ul>
+          {% for list in board.lists.all %} 
+              <li>
+                  <a href="{% url 'tasklist_detail' list.pk %}">
+                    {{list.title}}
+                  </a>
+              </li>
+          {% endfor %}
+      </ul>
+  </div>
+{% endblock %}
