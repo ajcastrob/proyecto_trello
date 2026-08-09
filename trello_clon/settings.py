@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "tailwind",
+    "django_extensions",
     "theme",
     "debug_toolbar",
     "accounts",
