@@ -24,6 +24,9 @@ from trello_clon.views import HomeView, LoginView, RegisterView, logout_view
 from boards.views import (
     BoardListView,
     BoardDetailView,
+    BoardCreateView,
+    BoardUpdateView,
+    BoardDeleteView,
     TaskListDetailView,
     TaskCreateView,
     TaskDeleteView,
@@ -72,6 +75,9 @@ urlpatterns = [
         TaskListDeleteView.as_view(),
         name="tasklist_delete",
     ),
+    path("board/create", BoardCreateView.as_view(), name="board_create"),
+    path("board/<pk>/update/", BoardUpdateView.as_view(), name="board_update"),
+    path("board/delete/<pk>/", BoardDeleteView.as_view(), name="board_delete"),
 ] + debug_toolbar_urls()
 
 

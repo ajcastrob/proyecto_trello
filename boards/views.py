@@ -6,7 +6,7 @@ from django.shortcuts import HttpResponseRedirect
 from .models import Board, TaskList, Task
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
-from boards.forms import TaskCreateForm, TaskListCreateForm
+from boards.forms import TaskCreateForm, TaskListCreateForm, BoardCreateForm
 
 
 # Create your views here.
@@ -26,6 +26,69 @@ class BoardDetailView(DetailView):
 
     def get_queryset(self):
         return Board.objects.prefetch_related("lists__tasks")
+
+
+class BoardCreateView(CreateView):
+    model = Board
+    form_class = BoardCreateForm
+    template_name = "board/board_create.html"
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+
+        response = super().form_valid(form)
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            "Tablero ha sido creado con éxito",
+        )
+        return response
+
+    def get_success_url(self):
+        return reverse("board_detail", kwargs={"pk": self.object.pk})
+
+
+class BoardUpdateView(UpdateView):
+    model = Board
+    form_class = BoardCreateForm
+    template_name = "board/board_update.html"
+    context_object_name = "boards"
+
+    def get_queryset(self):
+        return Board.objects.filter(owner=self.request.user)
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            "Tablero ha sido editado con éxito",
+        )
+        return response
+
+    def get_success_url(self):
+        return reverse("board_detail", kwargs={"pk": self.object.pk})
+
+
+class BoardDeleteView(SuccessMessageMixin, DeleteView):
+    model = Board
+    template_name = "board/board_confirm_delete.html"
+    context_object_name = "board"
+
+    def get_queryset(self):
+        return Board.objects.filter(owner=self.request.user)
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.add_message(
+            self.request,
+            messages.WARNING,
+            "Tablero ha sido eliminado",
+        )
+        return response
+
+    def get_success_url(self):
+        return reverse("board_list")
 
 
 class TaskListDetailView(DetailView):

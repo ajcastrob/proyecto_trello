@@ -1,0 +1,109 @@
+
+{% extends "core/layout.html" %}
+
+{% block head_title %}Eliminar tablero · TaskApp{% endblock %}
+{% block head_h1 %}{% endblock %}
+
+{% block page_content %}
+  <div class="w-full">
+
+    {# ── Breadcrumb ── #}
+    <nav class="mb-6" aria-label="Miga de pan">
+      <ol class="flex flex-wrap items-center gap-1.5 text-sm text-stone-500">
+        <li>
+          <a
+            href="{% url 'board_list' %}"
+            class="hover:text-stone-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40 rounded"
+          >
+            Tableros
+          </a>
+        </li>
+        <li aria-hidden="true" class="text-stone-700">/</li>
+        <li class="truncate max-w-[14rem] sm:max-w-none">
+          <a
+            href="{% url 'board_detail' board.pk %}"
+            class="hover:text-stone-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40 rounded"
+          >
+            {{ board.title }}
+          </a>
+        </li>
+        <li aria-hidden="true" class="text-stone-700">/</li>
+        <li class="text-stone-400 font-medium truncate max-w-[14rem] sm:max-w-none" aria-current="page">
+          Eliminar
+        </li>
+      </ol>
+    </nav>
+
+    <div class="max-w-md mx-auto">
+      <div
+        class="bg-stone-900 border border-stone-800 rounded-xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.2)]"
+        role="alertdialog"
+        aria-labelledby="delete-title"
+        aria-describedby="delete-desc"
+      >
+        {# Warning accent #}
+        <div
+          class="h-1 w-full rounded-full bg-gradient-to-r from-red-500 via-rose-500 to-orange-500 opacity-90 mb-6"
+          aria-hidden="true"
+        ></div>
+
+        <div class="flex flex-col items-center text-center">
+          <div
+            class="mb-4 flex size-14 items-center justify-center rounded-2xl bg-red-500/10 ring-1 ring-red-500/30"
+            aria-hidden="true"
+          >
+            <svg class="size-7 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+              <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 11v6M14 11v6" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <h1 id="delete-title" class="font-display text-2xl font-bold tracking-tight text-stone-100">
+            Eliminar tablero
+          </h1>
+          <p id="delete-desc" class="mt-2 text-sm text-stone-400 max-w-sm">
+            ¿Seguro que deseas eliminar este tablero? Esta acción no se puede deshacer.
+          </p>
+        </div>
+
+        {# Task preview card #}
+        <div class="mt-6 rounded-xl border border-stone-800 bg-stone-950/60 px-4 py-3.5 text-left">
+          <p class="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-stone-600 mb-1.5">
+            Tablero
+          </p>
+          <p class="font-medium text-stone-100 leading-snug">
+            {{ board.title }}
+          </p>
+          {% if task.description %}
+            <p class="mt-1.5 text-sm text-stone-500 leading-relaxed line-clamp-3">
+              {{ board.description }}
+            </p>
+          {% endif %}
+        </div>
+
+        <form method="post" class="mt-6 space-y-2.5">
+          {% csrf_token %}
+          {{ form }}
+
+          <button
+            type="submit"
+            class="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-500 active:bg-red-700 active:scale-[0.98] shadow-sm shadow-red-950/40 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950"
+          >
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 11v6M14 11v6" stroke-linecap="round"/>
+            </svg>
+            Sí, eliminar
+          </button>
+<a
+              href="{% url 'board_list' %}"
+            class="w-full inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-medium text-stone-300 border border-stone-700 bg-stone-950/40 hover:bg-stone-800 hover:border-stone-600 active:scale-[0.98] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+          >
+            Cancelar
+          </a>
+        </form>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

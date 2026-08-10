@@ -1,5 +1,5 @@
 from django import forms
-from boards.models import Task, TaskList
+from boards.models import Task, TaskList, Board
 
 
 # Dark stone UI (TaskApp)
@@ -47,4 +47,27 @@ class TaskListCreateForm(forms.ModelForm):
                     "autocomplete": "off",
                 }
             )
+        }
+
+
+class BoardCreateForm(forms.ModelForm):
+    class Meta:
+        model = Board
+        fields = ["title", "description"]
+        widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "class": INPUT_CLASSES,
+                    "placeholder": "Añade título",
+                    "aria-label": "Qué hacer",
+                }
+            ),
+            "description": forms.Textarea(
+                attrs={
+                    "class": INPUT_CLASSES,
+                    "placeholder": "Añade un comentario para la tarea",
+                    "rows": 5,
+                    "aria-label": "Añade comentarios",
+                }
+            ),
         }
