@@ -1,24 +1,24 @@
 {% extends "core/layout.html" %}
 
 {% block head_title %}{{ board.title }} · TaskApp{% endblock %}
-{% block head_h1 %}{% endblock %}
+{% block head_h1 %}{{ board.title }}{% endblock %}
 
 {% block page_content %}
   <div class="w-full">
 
     {# ── Breadcrumb ── #}
     <nav class="mb-6" aria-label="Miga de pan">
-      <ol class="flex flex-wrap items-center gap-1.5 text-sm text-stone-500">
+      <ol class="flex flex-wrap items-center gap-1.5 text-sm text-faint">
         <li>
           <a
             href="{% url 'board_list' %}"
-            class="hover:text-stone-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40 rounded"
+            class="rounded transition-colors duration-150 hover:text-ink focus:outline-none"
           >
             Tableros
           </a>
         </li>
-        <li aria-hidden="true" class="text-stone-700">/</li>
-        <li class="text-stone-400 font-medium truncate max-w-[14rem] sm:max-w-none" aria-current="page">
+        <li aria-hidden="true" class="text-line-strong">/</li>
+        <li class="max-w-[14rem] truncate font-medium text-muted sm:max-w-none" aria-current="page">
           {{ board.title }}
         </li>
       </ol>
@@ -28,27 +28,21 @@
     <header class="mb-8 sm:mb-10">
       <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div class="min-w-0">
-          <p class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-stone-500 mb-2">
-            Tablero
-          </p>
-          <h1 class="font-display text-2xl sm:text-3xl font-bold tracking-tight text-stone-100 truncate">
+          <h1 class="truncate font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">
             {{ board.title }}
           </h1>
           {% if board.description %}
-            <p class="mt-2 text-sm text-stone-400 max-w-md line-clamp-2">
-              {{ board.description }}
-            </p>
+            <p class="mt-2 max-w-md text-sm text-muted line-clamp-2">{{ board.description }}</p>
           {% else %}
-            <p class="mt-2 text-sm text-stone-400">
-              {{ board.lists.count }} lista{{ board.lists.count|pluralize:"s" }}
-              en este tablero
+            <p class="mt-2 text-sm text-muted">
+              {{ board.lists.count }} lista{{ board.lists.count|pluralize:"s" }} en este tablero
             </p>
           {% endif %}
         </div>
 
         <a
           href="{% url 'tasklist_create' board.pk %}"
-          class="inline-flex items-center justify-center gap-2 self-start sm:self-auto rounded-lg px-4 py-2.5 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-500 active:bg-sky-700 active:scale-[0.98] shadow-sm shadow-sky-900/30 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950"
+          class="inline-flex items-center justify-center gap-2 self-start rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none sm:self-auto"
         >
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
             <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
@@ -58,43 +52,40 @@
       </div>
     </header>
 
-    {# ── Lists grid (no horizontal scroll) ── #}
+    {# ── Lists grid ── #}
     {% if board.lists.all %}
       <ul
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
+        class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3"
         role="list"
         aria-label="Listas del tablero {{ board.title }}"
       >
         {% for list in board.lists.all %}
-          <li class="min-w-0">
+          <li class="rise-in min-w-0" style="animation-delay: {{ forloop.counter0|stringformat:'d' }}0ms">
             <section
-              class="group h-full flex flex-col rounded-xl border border-stone-800 bg-stone-900 shadow-[0_0_0_1px_rgba(0,0,0,0.2)] overflow-hidden transition-all duration-200 hover:border-stone-700 hover:shadow-lg hover:shadow-black/20"
+              class="flex h-full flex-col rounded-xl border border-line bg-surface-2 transition-colors duration-200 hover:border-line-strong"
               aria-labelledby="list-title-{{ list.pk }}"
             >
-              {# Accent bar #}
-              <div
-                class="h-1.5 w-full bg-gradient-to-r from-amber-400 via-pink-500 to-purple-600 opacity-80 group-hover:opacity-100 transition-opacity"
-                aria-hidden="true"
-              ></div>
-
               {# List header #}
-              <div class="flex items-start mt-2 mb-2 gap-1 px-3 pt-3.5 pb-2.5 border-b border-stone-800/80">
+              <div class="flex items-start gap-1 border-b border-line px-3 pb-2.5 pt-3.5">
                 <a
                   href="{% url 'tasklist_detail' list.pk %}"
                   id="list-title-{{ list.pk }}"
-                  class="flex-1 min-w-0 px-1 py-0.5 rounded-md hover:bg-stone-800/80 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+                  class="flex-1 min-w-0 rounded-md px-1 py-0.5 transition-colors duration-150 hover:bg-white focus:outline-none"
                 >
-                  <span class="block font-display text-base font-semibold text-stone-100 truncate group-hover:text-white transition-colors">
-                    {{ list.title }}
+                  <span class="flex items-center gap-1.5">
+                    <span class="size-2 shrink-0 rounded-full bg-brand" aria-hidden="true"></span>
+                    <span class="block truncate font-display text-base font-semibold text-ink">
+                      {{ list.title }}
+                    </span>
                   </span>
-                  <span class="mt-0.5 block font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-stone-500">
+                  <span class="mt-0.5 block pl-3.5 font-mono text-[10px] text-faint">
                     {{ list.tasks.count }} tarjeta{{ list.tasks.count|pluralize:"s" }}
                   </span>
                 </a>
-                <div class="flex items-center shrink-0">
+                <div class="flex shrink-0 items-center">
                   <a
                     href="{% url 'tasklist_update' list.pk %}"
-                    class="inline-flex items-center justify-center size-8 rounded-md text-stone-500 hover:text-stone-200 hover:bg-stone-800 active:scale-[0.96] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+                    class="inline-flex size-8 items-center justify-center rounded-md text-faint transition-colors duration-150 hover:bg-white hover:text-ink focus:outline-none"
                     aria-label="Editar lista {{ list.title }}"
                     title="Editar lista"
                   >
@@ -105,7 +96,7 @@
                   </a>
                   <a
                     href="{% url 'tasklist_delete' list.pk %}"
-                    class="inline-flex items-center justify-center size-8 rounded-md text-stone-500 hover:text-red-400 hover:bg-red-950/40 active:scale-[0.96] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40"
+                    class="inline-flex size-8 items-center justify-center rounded-md text-faint transition-colors duration-150 hover:bg-danger-soft hover:text-danger focus:outline-none"
                     aria-label="Eliminar lista {{ list.title }}"
                     title="Eliminar lista"
                   >
@@ -117,35 +108,29 @@
                 </div>
               </div>
 
-              {# Task cards (preview, no internal max-height scroll) #}
-              <ul class="flex-1 px-3 py-3 space-y-2">
+              {# Task cards #}
+              <ul class="flex-1 space-y-2 px-3 py-3">
                 {% for task in list.tasks.all|slice:":4" %}
                   <li>
                     <a
                       href="{% url 'tasklist_detail' list.pk %}"
-                      class="block rounded-lg border border-stone-800 bg-stone-950/60 px-3 py-2.5 text-sm hover:border-stone-700 hover:bg-stone-950 active:scale-[0.99] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+                      class="block rounded-lg border border-line bg-white px-3 py-2.5 text-sm transition-colors duration-150 hover:border-line-strong focus:outline-none"
                     >
-                      <span class="font-medium leading-snug line-clamp-2 text-stone-100">
-                        {{ task.title }}
-                      </span>
+                      <span class="line-clamp-2 font-medium leading-snug text-ink">{{ task.title }}</span>
                       {% if task.description %}
-                        <span class="mt-1 block text-xs text-stone-500 line-clamp-1 leading-relaxed">
-                          {{ task.description }}
-                        </span>
+                        <span class="mt-1 block line-clamp-1 text-xs leading-relaxed text-muted">{{ task.description }}</span>
                       {% endif %}
                     </a>
                   </li>
                 {% empty %}
-                  <li class="px-1 py-3 text-center text-xs text-stone-600">
-                    Sin tarjetas todavía
-                  </li>
+                  <li class="px-1 py-3 text-center text-xs text-faint">Sin tarjetas todavía</li>
                 {% endfor %}
 
                 {% if list.tasks.count > 4 %}
                   <li>
                     <a
                       href="{% url 'tasklist_detail' list.pk %}"
-                      class="block text-center text-xs font-medium text-stone-500 hover:text-sky-400 transition-colors py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40 rounded"
+                      class="block rounded py-1.5 text-center text-xs font-medium text-muted transition-colors duration-150 hover:text-brand-deep focus:outline-none"
                     >
                       Ver las {{ list.tasks.count }} tarjetas
                     </a>
@@ -154,10 +139,10 @@
               </ul>
 
               {# List footer #}
-              <div class="mt-auto p-2.5 border-t border-stone-800/80">
+              <div class="mt-auto border-t border-line p-2.5">
                 <a
                   href="{% url 'task_create' list.pk %}"
-                  class="flex items-center gap-1.5 w-full rounded-lg px-2.5 py-2 text-sm font-medium text-stone-400 hover:bg-stone-800/80 hover:text-stone-200 active:scale-[0.99] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+                  class="flex w-full items-center gap-1.5 rounded-lg px-2.5 py-2 text-sm font-medium text-muted transition-colors duration-150 hover:bg-white hover:text-ink focus:outline-none"
                 >
                   <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
@@ -173,10 +158,10 @@
         <li class="min-w-0">
           <a
             href="{% url 'tasklist_create' board.pk %}"
-            class="flex h-full min-h-[12rem] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-stone-800 bg-stone-900/40 px-4 py-8 text-sm font-medium text-stone-400 hover:border-stone-700 hover:bg-stone-900/70 hover:text-stone-200 active:scale-[0.99] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+            class="flex h-full min-h-[12rem] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-line-strong bg-surface px-4 py-8 text-sm font-medium text-muted transition-colors duration-150 hover:border-brand/40 hover:bg-brand-soft/50 hover:text-brand-deep focus:outline-none"
           >
             <span
-              class="flex size-10 items-center justify-center rounded-xl bg-stone-800/80 text-stone-300"
+              class="flex size-10 items-center justify-center rounded-xl bg-white text-ink"
               aria-hidden="true"
             >
               <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -189,23 +174,22 @@
       </ul>
     {% else %}
       {# ── Empty state ── #}
-      <div class="rounded-xl border border-dashed border-stone-800 bg-stone-900/40 px-6 py-16 text-center">
-        <div
-          class="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500/20 to-blue-600/20 ring-1 ring-sky-500/30"
+      <div class="rounded-xl border border-dashed border-line-strong bg-surface px-6 py-16 text-center">
+        <span
+          class="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-brand-soft text-brand-deep"
           aria-hidden="true"
         >
-          <svg class="size-7 text-sky-400" viewBox="0 0 24 24" fill="currentColor">
-            <rect x="3" y="3" width="7" height="18" rx="1.5" opacity="0.95"/>
-            <rect x="14" y="3" width="7" height="12" rx="1.5" opacity="0.75"/>
+          <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M3 5a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5z" stroke-linejoin="round"/>
           </svg>
-        </div>
-        <h2 class="font-display text-lg font-semibold text-stone-200">Este tablero está vacío</h2>
-        <p class="mt-2 text-sm text-stone-500 max-w-sm mx-auto">
+        </span>
+        <h2 class="font-display text-lg font-semibold text-ink">Este tablero está vacío</h2>
+        <p class="mx-auto mt-2 max-w-sm text-sm text-muted">
           Crea tu primera lista para organizar tarjetas y tareas en columnas.
         </p>
         <a
           href="{% url 'tasklist_create' board.pk %}"
-          class="mt-5 inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-500 active:bg-sky-700 active:scale-[0.98] shadow-sm shadow-sky-900/30 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950"
+          class="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
         >
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
             <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
