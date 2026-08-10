@@ -1,19 +1,19 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <title>Django Tailwind</title>
+    <title>TaskApp</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% tailwind_css %}
 </head>
 
-<body class="bg-gray-50 text-black font-serif leading-normal tracking-normal">
-<div class="container mx-auto">
-    <section class="flex items-center justify-center h-screen">
-        <h1 class="text-5xl">Django + Tailwind = ❤️</h1>
-    </section>
-</div>
+<body class="bg-white text-ink font-sans antialiased">
+    <main class="flex min-h-screen items-center justify-center px-6">
+        <p class="text-sm text-muted">
+            TaskApp · la interfaz real vive en <code class="font-mono text-brand-deep">trello_clon/templates/core/layout.html</code>
+        </p>
+    </main>
 </body>
 </html>

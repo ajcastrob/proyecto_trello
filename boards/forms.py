@@ -2,11 +2,11 @@ from django import forms
 from boards.models import Task, TaskList, Board
 
 
-# Dark stone UI (TaskApp)
+# Light paper UI (TaskApp)
 INPUT_CLASSES = (
-    "w-full rounded-lg bg-stone-950 border border-stone-700 px-3 py-2 "
-    "text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 "
-    "focus:ring-sky-500 focus:border-sky-500"
+    "w-full rounded-lg border border-line-strong bg-white px-3 py-2 "
+    "text-ink placeholder-muted focus:outline-none focus:ring-2 "
+    "focus:ring-brand/40 focus:border-brand"
 )
 
 

@@ -1,100 +1,71 @@
 {% extends "core/layout.html" %}
 
-{% block head_title %}Editar tarea · TaskApp{% endblock %}
-{% block head_h1 %}{% endblock %}
+{% block head_title %}Editar tarjeta · TaskApp{% endblock %}
+{% block head_h1 %}Editar tarjeta{% endblock %}
 
 {% block page_content %}
-  <div class="w-full">
+  <div class="mx-auto w-full max-w-xl">
 
-    {# ── Breadcrumb ── #}
     <nav class="mb-6" aria-label="Miga de pan">
-      <ol class="flex flex-wrap items-center gap-1.5 text-sm text-stone-500">
+      <ol class="flex flex-wrap items-center gap-1.5 text-sm text-faint">
         <li>
-          <a
-            href="{% url 'board_list' %}"
-            class="hover:text-stone-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40 rounded"
-          >
+          <a href="{% url 'board_list' %}" class="rounded transition-colors duration-150 hover:text-ink focus:outline-none">
             Tableros
           </a>
         </li>
-        <li aria-hidden="true" class="text-stone-700">/</li>
+        <li aria-hidden="true" class="text-line-strong">/</li>
         <li>
-          <a
-            href="{% url 'board_detail' task.task_list.board.pk %}"
-            class="hover:text-stone-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40 rounded"
-          >
+          <a href="{% url 'board_detail' task.task_list.board_id %}" class="max-w-[10rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none">
             {{ task.task_list.board.title }}
           </a>
         </li>
-        <li aria-hidden="true" class="text-stone-700">/</li>
+        <li aria-hidden="true" class="text-line-strong">/</li>
         <li>
-          <a
-            href="{% url 'tasklist_detail' task.task_list.pk %}"
-            class="hover:text-stone-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40 rounded truncate max-w-[10rem] sm:max-w-none inline-block align-bottom"
-          >
+          <a href="{% url 'tasklist_detail' task.task_list_id %}" class="max-w-[10rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none">
             {{ task.task_list.title }}
           </a>
         </li>
-        <li aria-hidden="true" class="text-stone-700">/</li>
-        <li class="text-stone-400 font-medium truncate max-w-[10rem] sm:max-w-none" aria-current="page">
-          Editar
-        </li>
+        <li aria-hidden="true" class="text-line-strong">/</li>
+        <li class="font-medium text-muted" aria-current="page">Editar tarjeta</li>
       </ol>
     </nav>
 
-    <div class="max-w-md mx-auto">
-      <div class="bg-stone-900 border border-stone-800 rounded-xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.2)]">
-        <div
-          class="h-1 w-full rounded-full bg-gradient-to-r from-amber-400 via-pink-500 to-purple-600 opacity-80 mb-6"
-          aria-hidden="true"
-        ></div>
+    <div class="rounded-xl border border-line bg-surface p-6 sm:p-8">
+      <h1 class="font-display text-2xl font-bold tracking-tight text-ink">Editar tarjeta</h1>
+      <p class="mt-1 text-sm text-muted">Actualiza el título o la descripción de la tarea.</p>
 
-        <h1 class="font-display text-center text-2xl font-bold tracking-tight text-stone-100 mb-1">
-          Editar
-          <span class="bg-gradient-to-r from-amber-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-            tarea
-          </span>
-        </h1>
-        <p class="text-center text-stone-400 text-sm mb-6 line-clamp-2">
-          {{ task.title }}
-        </p>
+      <form action="" method="POST" class="mt-6 space-y-4">
+        {% csrf_token %}
 
-        <form action="" method="POST" class="space-y-4">
-          {% csrf_token %}
-
-          {% for field in form.visible_fields %}
-            <div>
-              <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-stone-300 mb-1">
-                {{ field.label }}
-              </label>
-              {{ field }}
-              {% for error in field.errors %}
-                <p class="text-red-400 text-sm mt-1">{{ error }}</p>
-              {% endfor %}
-            </div>
-          {% endfor %}
-
-          {% for error in form.non_field_errors %}
-            <p class="text-red-400 text-sm">{{ error }}</p>
-          {% endfor %}
-
-          <div class="flex flex-col gap-2.5 pt-1">
-            <button
-              type="submit"
-              class="w-full inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-500 active:bg-sky-700 active:scale-[0.98] shadow-sm shadow-sky-900/30 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950"
-            >
-              Guardar cambios
-            </button>
-            <a
-              href="{% url 'tasklist_detail' task.task_list.pk %}"
-              class="w-full inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-medium text-stone-300 border border-stone-700 bg-stone-950/40 hover:bg-stone-800 hover:border-stone-600 active:scale-[0.98] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
-            >
-              Cancelar
-            </a>
+        {% for field in form.visible_fields %}
+          <div>
+            <label for="{{ field.id_for_label }}" class="mb-1 block text-sm font-medium text-ink">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}
+              <p class="mt-1 text-sm text-danger">{{ error }}</p>
+            {% endfor %}
           </div>
-        </form>
-      </div>
-    </div>
+        {% endfor %}
 
+        {% for error in form.non_field_errors %}
+          <p class="text-sm text-danger">{{ error }}</p>
+        {% endfor %}
+
+        <div class="flex items-center gap-3 pt-2">
+          <button
+            type="submit"
+            class="rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
+          >
+            Guardar cambios
+          </button>
+          <a
+            href="{% url 'tasklist_detail' task.task_list_id %}"
+            class="rounded-lg px-4 py-2.5 text-sm font-medium text-muted transition-colors duration-150 hover:text-ink focus:outline-none"
+          >
+            Cancelar
+          </a>
+        </div>
+      </form>
+    </div>
   </div>
 {% endblock %}

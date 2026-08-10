@@ -1,24 +1,23 @@
-<header class="sticky top-0 z-40 border-b border-stone-800/90 bg-stone-950/90 backdrop-blur-md supports-[backdrop-filter]:bg-stone-950/80 shadow-sm shadow-black/20">
+<header class="sticky top-0 z-40 border-b border-line bg-white">
   <div class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-14 sm:h-[60px] items-center justify-between gap-3">
+    <div class="flex h-14 items-center justify-between gap-3 sm:h-[60px]">
 
       {# ── Logo ── #}
       <a
         href="{% url 'home' %}"
-        class="group flex items-center gap-2.5 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950 rounded-lg"
-        aria-label="TaskApp — Inicio"
+        class="group flex shrink-0 items-center gap-2.5 rounded-lg focus:outline-none"
+        aria-label="TaskApp, inicio"
       >
-        {# Icono tipo tablero Trello #}
         <span
-          class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-sky-500 to-blue-600 shadow-md shadow-sky-900/40 group-hover:from-sky-400 group-hover:to-blue-500 transition-all duration-200"
+          class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-white transition-colors duration-150 group-hover:bg-brand-deep"
           aria-hidden="true"
         >
-          <svg class="h-4.5 w-4.5 text-white" viewBox="0 0 24 24" fill="currentColor">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
             <rect x="3" y="3" width="7" height="18" rx="1.5" opacity="0.95"/>
             <rect x="14" y="3" width="7" height="12" rx="1.5" opacity="0.75"/>
           </svg>
         </span>
-        <span class="font-display text-xl sm:text-2xl font-bold leading-none tracking-tight bg-gradient-to-r from-amber-400 via-pink-500 to-purple-600 bg-clip-text text-transparent group-hover:from-amber-300 group-hover:via-pink-400 group-hover:to-purple-500 transition-all duration-200">
+        <span class="font-display text-xl font-bold leading-none tracking-tight text-ink sm:text-2xl">
           TaskApp
         </span>
       </a>
@@ -29,9 +28,9 @@
           <li>
             <a
               href="{% url 'home' %}"
-              class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-stone-300 hover:text-white hover:bg-stone-800/80 active:bg-stone-800 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+              class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-muted transition-colors duration-150 hover:bg-surface hover:text-ink focus:outline-none"
             >
-              Home
+              Inicio
             </a>
           </li>
 
@@ -39,49 +38,47 @@
             <li>
               <a
                 href="{% url 'login' %}"
-                class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-stone-300 hover:text-white hover:bg-stone-800/80 active:bg-stone-800 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+                class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-muted transition-colors duration-150 hover:bg-surface hover:text-ink focus:outline-none"
               >
-                Login
+                Entrar
               </a>
             </li>
             <li>
               <a
                 href="{% url 'register' %}"
-                class="inline-flex items-center rounded-lg px-3.5 py-1.5 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-500 active:bg-sky-700 shadow-sm shadow-sky-900/30 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-950"
+                class="inline-flex items-center rounded-lg bg-brand px-3.5 py-1.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
               >
-                Registro
+                Crear cuenta
               </a>
             </li>
           {% else %}
-                <li>
-                    <a
-                      href="{% url 'board_list' %}"
-                      class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-stone-300 hover:text-white hover:bg-stone-800/80 active:bg-stone-800 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
-                    >
-                      Tableros
-                    </a>
-              </li>
-              <li>
-                  <form method="post" action="{% url 'logout' %}">
-                      {% csrf_token %}
-                      <button 
-                        type="submit"
-                        class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-stone-300 hover:text-white hover:bg-stone-800/80 active:bg-stone-800 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
-                      >
-                        Logout
-                      </button>
-                  </form>
-              </li>
-              <li class="hidden sm:block">
-                <span class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm text-stone-400">
-                  <span
-                    class="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-blue-600 text-xs font-bold text-white uppercase"
-                    aria-hidden="true"
-                  >
-                    {{ request.user.username|slice:":1" }}
-                  </span>
-                </span>
-              </li>
+            <li>
+              <a
+                href="{% url 'board_list' %}"
+                class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-muted transition-colors duration-150 hover:bg-surface hover:text-ink focus:outline-none"
+              >
+                Tableros
+              </a>
+            </li>
+            <li>
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button
+                  type="submit"
+                  class="inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-medium text-muted transition-colors duration-150 hover:bg-surface hover:text-ink focus:outline-none"
+                >
+                  Salir
+                </button>
+              </form>
+            </li>
+            <li class="hidden sm:block">
+              <span
+                class="ml-1 inline-flex size-7 items-center justify-center rounded-full bg-brand-soft text-xs font-bold uppercase text-brand-deep"
+                aria-hidden="true"
+              >
+                {{ request.user.username|slice:":1" }}
+              </span>
+            </li>
           {% endif %}
         </ul>
       </nav>

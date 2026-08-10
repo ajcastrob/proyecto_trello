@@ -4,26 +4,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TaskApp: tableros, listas y tareas para organizar tus proyectos de un vistazo.">
   <title>{% block head_title %}{% endblock %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700;800&display=swap"
     rel="stylesheet"
   >
-{% tailwind_css %}
+  {% tailwind_css %}
 </head>
-  <body class="bg-stone-950 text-stone-100 font-sans antialiased relative flex flex-col min-h-screen"> 
-      {% include "_includes/_main_menu.html" %}  
-      <main class="flex-1 w-full flex flex-col min-h-0">
-          <div class="{% block content_container_class %}mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8 py-8{% endblock %}">
-              <h1>{% block head_h1 %}{% endblock %}</h1>
-                  {% include "_includes/_messages.html" %}
-                  {% block page_content %}
-                  {% endblock %}
-          </div>
-      </main> 
-
-      {% include "_includes/_footer.html" %}
-  </body>
+<body class="flex min-h-screen flex-col bg-white font-sans text-ink antialiased">
+  {% include "_includes/_main_menu.html" %}
+  <main class="flex min-h-0 w-full flex-1 flex-col">
+    <div class="{% block content_container_class %}mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8{% endblock %}">
+      <h1 class="sr-only">{% block head_h1 %}{% endblock %}</h1>
+      {% include "_includes/_messages.html" %}
+      {% block page_content %}
+      {% endblock %}
+    </div>
+  </main>
+  {% include "_includes/_footer.html" %}
+</body>
 </html>

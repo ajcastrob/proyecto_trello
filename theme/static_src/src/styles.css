@@ -1,24 +1,103 @@
 @import "tailwindcss";
 
 /**
-  * A catch-all path to Django template files, JavaScript, and Python files
-  * that contain Tailwind CSS classes and will be scanned by Tailwind to generate the final CSS file.
-  *
-  * If your final CSS file is not being updated after code changes, you may want to broaden or narrow
-  * the scope of this path.
+  * Catch-all path for Django templates, JavaScript, and Python files
+  * that contain Tailwind CSS classes and will be scanned by Tailwind.
   */
 @source "../../../**/*.{html,py,js}";
 
 /**
- * TaskApp type system
+ * TaskApp design system
+ * Direction: "libreta de trabajo seria, rotulador ámbar sobre papel blanco"
+ * Scene: solo desk, late afternoon, window light, calm focus.
+ * See DESIGN.md for rationale. All colors in OKLCH.
+ *
  * - sans (DM Sans): UI body, forms, nav, descriptions
- * - display (Outfit): logo, heroes, page/section titles
- * - mono (JetBrains Mono): eyebrows, meta labels, counts
+ * - display (Schibsted Grotesk): logo, heroes, page/section titles
+ * - mono (JetBrains Mono): counts, meta labels, timestamps
  */
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
+
+  /* Brand: burnt amber (seed oklch(0.660 0.201 40.0), deepened for fills) */
+  --color-brand: oklch(0.64 0.19 40);
+  --color-brand-deep: oklch(0.55 0.17 40);
+  --color-brand-soft: oklch(0.94 0.035 40);
+
+  /* Accent: deep olive (apothecary-label pairing, not default-complementary) */
+  --color-accent: oklch(0.38 0.085 130);
+  --color-accent-deep: oklch(0.33 0.08 130);
+  --color-accent-soft: oklch(0.94 0.02 130);
+
+  /* Destructive */
+  --color-danger: oklch(0.55 0.21 25);
+  --color-danger-deep: oklch(0.48 0.19 25);
+  --color-danger-soft: oklch(0.95 0.02 25);
+
+  /* Neutrals, tinted toward brand hue 40 (not warm-by-default) */
+  --color-ink: oklch(0.21 0.015 40);
+  --color-muted: oklch(0.5 0.012 40);
+  --color-faint: oklch(0.55 0.012 40);
+  --color-surface: oklch(0.965 0.006 40);
+  --color-surface-2: oklch(0.945 0.008 40);
+  --color-line: oklch(0.89 0.008 40);
+  --color-line-strong: oklch(0.82 0.01 40);
+}
+
+@layer base {
+  body {
+    @apply bg-white text-ink font-sans antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-soft);
+    color: var(--color-ink);
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Motion: card entrance (safe floor at opacity .6 so content is never hidden
+ * if the animation is paused on a hidden tab). Reduced motion disables it.
+ * ------------------------------------------------------------------------- */
+.rise-in {
+  animation: rise-in 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0.6;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise-in,
+  .rise-in * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
