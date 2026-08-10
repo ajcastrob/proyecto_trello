@@ -62,7 +62,7 @@
                 </h2>
 
                 <a
-                  href="{% url 'board_detail' board.pk %}"
+                  href="{% url 'board:detail' board.pk %}"
                   class="group/link mt-1 flex items-center gap-1.5 text-base font-medium text-muted transition-colors duration-150 hover:text-brand-deep"
                 >
                   <span class="min-w-0 truncate">Ir al tablero</span>
@@ -117,7 +117,7 @@
 
               <div class="flex items-center justify-end gap-2 border-t border-line bg-surface px-5 py-3 sm:px-6">
                 <a
-                  href="{% url 'board_update' board.pk %}"
+                  href="{% url 'board:update' board.pk %}"
                   aria-label="Editar tablero {{ board.title }}"
                   title="Editar tablero"
                   class="flex size-8 items-center justify-center rounded-lg border border-line bg-white text-muted transition-colors duration-150 hover:border-brand/40 hover:text-brand-deep focus:outline-none"
@@ -128,7 +128,7 @@
                   </svg>
                 </a>
                 <a
-                  href="{% url 'board_delete' board.pk %}"
+                  href="{% url 'board:delete' board.pk %}"
                   aria-label="Eliminar tablero {{ board.title }}"
                   title="Eliminar tablero"
                   class="flex size-8 items-center justify-center rounded-lg border border-line bg-white text-muted transition-colors duration-150 hover:border-danger/40 hover:bg-danger-soft hover:text-danger focus:outline-none"
@@ -166,7 +166,7 @@
 
     <div class="mt-8">
       <a
-        href="{% url 'board_create' %}"
+        href="{% url 'board:create' %}"
         class="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
       >
         <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

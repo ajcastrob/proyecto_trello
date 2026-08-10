@@ -1,7 +1,7 @@
 {% extends "core/layout.html" %}
 
-{% block head_title %}Nueva tarjeta · TaskApp{% endblock %}
-{% block head_h1 %}Nueva tarjeta{% endblock %}
+{% block head_title %}Editar lista · TaskApp{% endblock %}
+{% block head_h1 %}Editar lista{% endblock %}
 
 {% block page_content %}
   <div class="mx-auto w-full max-w-xl">
@@ -9,30 +9,24 @@
     <nav class="mb-6" aria-label="Miga de pan">
       <ol class="flex flex-wrap items-center gap-1.5 text-sm text-faint">
         <li>
-          <a href="{% url 'board_list' %}" class="rounded transition-colors duration-150 hover:text-ink focus:outline-none">
+          <a href="{% url 'board:list' %}" class="rounded transition-colors duration-150 hover:text-ink focus:outline-none">
             Tableros
           </a>
         </li>
         <li aria-hidden="true" class="text-line-strong">/</li>
         <li>
-          <a href="{% url 'board_detail' tasklist.board_id %}" class="max-w-[10rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none">
+          <a href="{% url 'board:detail' tasklist.board_id %}" class="max-w-[12rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none">
             {{ tasklist.board.title }}
           </a>
         </li>
         <li aria-hidden="true" class="text-line-strong">/</li>
-        <li>
-          <a href="{% url 'tasklist_detail' tasklist.pk %}" class="max-w-[10rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none">
-            {{ tasklist.title }}
-          </a>
-        </li>
-        <li aria-hidden="true" class="text-line-strong">/</li>
-        <li class="font-medium text-muted" aria-current="page">Nueva tarjeta</li>
+        <li class="font-medium text-muted" aria-current="page">Editar lista</li>
       </ol>
     </nav>
 
     <div class="rounded-xl border border-line bg-surface p-6 sm:p-8">
-      <h1 class="font-display text-2xl font-bold tracking-tight text-ink">Nueva tarjeta</h1>
-      <p class="mt-1 text-sm text-muted">Añade una tarea a la lista «{{ tasklist.title }}».</p>
+      <h1 class="font-display text-2xl font-bold tracking-tight text-ink">Editar lista</h1>
+      <p class="mt-1 text-sm text-muted">Renombra la columna de tu tablero.</p>
 
       <form action="" method="POST" class="mt-6 space-y-4">
         {% csrf_token %}
@@ -56,10 +50,10 @@
             type="submit"
             class="rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
           >
-            Crear tarjeta
+            Guardar cambios
           </button>
           <a
-            href="{% url 'tasklist_detail' tasklist.pk %}"
+            href="{% url 'board:detail' tasklist.board_id %}"
             class="rounded-lg px-4 py-2.5 text-sm font-medium text-muted transition-colors duration-150 hover:text-ink focus:outline-none"
           >
             Cancelar

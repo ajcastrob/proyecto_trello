@@ -10,7 +10,7 @@ from boards.models import Task, TaskList
 class TaskCreateView(CreateView):
     model = Task
     form_class = TaskCreateForm
-    template_name = "board/task_create.html"
+    template_name = "task/task_create.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -37,13 +37,13 @@ class TaskCreateView(CreateView):
         return response
 
     def get_success_url(self):
-        return reverse("tasklist_detail", kwargs={"pk": self.kwargs["list_pk"]})
+        return reverse("tasklist:detail", kwargs={"pk": self.kwargs["list_pk"]})
 
 
 class TaskUpdateView(UpdateView):
     model = Task
     form_class = TaskCreateForm
-    template_name = "board/task_update.html"
+    template_name = "task/task_update.html"
     context_object_name = "task"
 
     def get_queryset(self):
@@ -59,12 +59,12 @@ class TaskUpdateView(UpdateView):
         return response
 
     def get_success_url(self):
-        return reverse("tasklist_detail", kwargs={"pk": self.object.task_list_id})
+        return reverse("tasklist:detail", kwargs={"pk": self.object.task_list_id})
 
 
 class TaskDeleteView(SuccessMessageMixin, DeleteView):
     model = Task
-    template_name = "board/task_confirm_delete.html"
+    template_name = "task/task_confirm_delete.html"
     context_object_name = "task"
 
     def get_queryset(self):
@@ -84,4 +84,4 @@ class TaskDeleteView(SuccessMessageMixin, DeleteView):
         return response
 
     def get_success_url(self):
-        return reverse("tasklist_detail", kwargs={"pk": self.object.task_list_id})
+        return reverse("tasklist:detail", kwargs={"pk": self.object.task_list_id})

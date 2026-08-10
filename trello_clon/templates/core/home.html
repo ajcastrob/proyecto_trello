@@ -29,7 +29,7 @@
         <div class="mt-8 flex flex-wrap items-center gap-3">
           {% if request.user.is_authenticated %}
             <a
-              href="{% url 'board_list' %}"
+              href="{% url 'board:list' %}"
               class="inline-flex items-center justify-center rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
             >
               Ver mis tableros

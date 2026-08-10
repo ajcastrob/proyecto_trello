@@ -9,14 +9,14 @@ from boards.models import TaskList, Board
 
 class TaskListDetailView(DetailView):
     model = TaskList
-    template_name = "board/tasklist_detail.html"
+    template_name = "tasklist/tasklist_detail.html"
     context_object_name = "tasklist"
 
 
 class TaskListCreateView(CreateView):
     model = TaskList
     form_class = TaskListCreateForm
-    template_name = "board/tasklist_create.html"
+    template_name = "tasklist/tasklist_create.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,13 +38,13 @@ class TaskListCreateView(CreateView):
         return response
 
     def get_success_url(self):
-        return reverse("board_detail", kwargs={"pk": self.kwargs["board_pk"]})
+        return reverse("board:detail", kwargs={"pk": self.kwargs["board_pk"]})
 
 
 class TaskListUpdateView(UpdateView):
     model = TaskList
     form_class = TaskListCreateForm
-    template_name = "board/tasklist_update.html"
+    template_name = "tasklist/tasklist_update.html"
     context_object_name = "tasklist"
 
     def get_queryset(self):
@@ -62,12 +62,12 @@ class TaskListUpdateView(UpdateView):
         return response
 
     def get_success_url(self):
-        return reverse("board_detail", kwargs={"pk": self.object.board_id})
+        return reverse("board:detail", kwargs={"pk": self.object.board_id})
 
 
 class TaskListDeleteView(SuccessMessageMixin, DeleteView):
     model = TaskList
-    template_name = "board/tasklist_confirm_delete.html"
+    template_name = "tasklist/tasklist_confirm_delete.html"
     context_object_name = "tasklist"
 
     def get_queryset(self):
@@ -86,4 +86,4 @@ class TaskListDeleteView(SuccessMessageMixin, DeleteView):
         return response
 
     def get_success_url(self):
-        return reverse("board_detail", kwargs={"pk": self._board_pk})
+        return reverse("board:detail", kwargs={"pk": self._board_pk})

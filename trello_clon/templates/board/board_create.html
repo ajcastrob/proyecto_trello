@@ -9,7 +9,7 @@
     <nav class="mb-6" aria-label="Miga de pan">
       <ol class="flex flex-wrap items-center gap-1.5 text-sm text-faint">
         <li>
-          <a href="{% url 'board_list' %}" class="rounded transition-colors duration-150 hover:text-ink focus:outline-none">
+          <a href="{% url 'board:list' %}" class="rounded transition-colors duration-150 hover:text-ink focus:outline-none">
             Tableros
           </a>
         </li>
@@ -47,7 +47,7 @@
             Crear tablero
           </button>
           <a
-            href="{% url 'board_list' %}"
+            href="{% url 'board:list' %}"
             class="rounded-lg px-4 py-2.5 text-sm font-medium text-muted transition-colors duration-150 hover:text-ink focus:outline-none"
           >
             Cancelar

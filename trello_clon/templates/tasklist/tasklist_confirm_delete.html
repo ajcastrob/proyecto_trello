@@ -1,7 +1,7 @@
 {% extends "core/layout.html" %}
 
-{% block head_title %}Eliminar tarjeta · TaskApp{% endblock %}
-{% block head_h1 %}Eliminar tarjeta{% endblock %}
+{% block head_title %}Eliminar lista · TaskApp{% endblock %}
+{% block head_h1 %}Eliminar lista{% endblock %}
 
 {% block page_content %}
   <div class="mx-auto w-full max-w-xl">
@@ -9,24 +9,18 @@
     <nav class="mb-6" aria-label="Miga de pan">
       <ol class="flex flex-wrap items-center gap-1.5 text-sm text-faint">
         <li>
-          <a href="{% url 'board_list' %}" class="rounded transition-colors duration-150 hover:text-ink focus:outline-none">
+          <a href="{% url 'board:list' %}" class="rounded transition-colors duration-150 hover:text-ink focus:outline-none">
             Tableros
           </a>
         </li>
         <li aria-hidden="true" class="text-line-strong">/</li>
         <li>
-          <a href="{% url 'board_detail' task.task_list.board_id %}" class="max-w-[10rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none">
-            {{ task.task_list.board.title }}
+          <a href="{% url 'board:detail' tasklist.board_id %}" class="max-w-[12rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none">
+            {{ tasklist.board.title }}
           </a>
         </li>
         <li aria-hidden="true" class="text-line-strong">/</li>
-        <li>
-          <a href="{% url 'tasklist_detail' task.task_list_id %}" class="max-w-[10rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none">
-            {{ task.task_list.title }}
-          </a>
-        </li>
-        <li aria-hidden="true" class="text-line-strong">/</li>
-        <li class="font-medium text-muted" aria-current="page">Eliminar tarjeta</li>
+        <li class="font-medium text-muted" aria-current="page">Eliminar lista</li>
       </ol>
     </nav>
 
@@ -43,9 +37,10 @@
         </span>
         <div class="min-w-0">
           <h1 class="font-display text-xl font-bold tracking-tight text-ink sm:text-2xl">
-            ¿Eliminar la tarjeta «{{ task.title }}»?
+            ¿Eliminar la lista «{{ tasklist.title }}»?
           </h1>
           <p class="mt-2 text-sm leading-relaxed text-muted">
+            Se borrarán también sus {{ tasklist.tasks.count }} tarjeta{{ tasklist.tasks.count|pluralize:"s" }}.
             Esta acción no se puede deshacer.
           </p>
         </div>
@@ -57,10 +52,10 @@
           type="submit"
           class="rounded-lg bg-danger px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-danger-deep focus:outline-none"
         >
-          Eliminar tarjeta
+          Eliminar lista
         </button>
         <a
-          href="{% url 'tasklist_detail' task.task_list_id %}"
+          href="{% url 'board:detail' tasklist.board_id %}"
           class="rounded-lg px-4 py-2.5 text-sm font-medium text-muted transition-colors duration-150 hover:text-ink focus:outline-none"
         >
           Cancelar

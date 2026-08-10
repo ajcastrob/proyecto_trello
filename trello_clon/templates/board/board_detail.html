@@ -11,7 +11,7 @@
       <ol class="flex flex-wrap items-center gap-1.5 text-sm text-faint">
         <li>
           <a
-            href="{% url 'board_list' %}"
+            href="{% url 'board:list' %}"
             class="rounded transition-colors duration-150 hover:text-ink focus:outline-none"
           >
             Tableros
@@ -41,7 +41,7 @@
         </div>
 
         <a
-          href="{% url 'tasklist_create' board.pk %}"
+          href="{% url 'tasklist:create' board.pk %}"
           class="inline-flex items-center justify-center gap-2 self-start rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none sm:self-auto"
         >
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
@@ -68,7 +68,7 @@
               {# List header #}
               <div class="flex items-start gap-1 border-b border-line px-3 pb-2.5 pt-3.5">
                 <a
-                  href="{% url 'tasklist_detail' list.pk %}"
+                  href="{% url 'tasklist:detail' list.pk %}"
                   id="list-title-{{ list.pk }}"
                   class="flex-1 min-w-0 rounded-md px-1 py-0.5 transition-colors duration-150 hover:bg-white focus:outline-none"
                 >
@@ -84,7 +84,7 @@
                 </a>
                 <div class="flex shrink-0 items-center">
                   <a
-                    href="{% url 'tasklist_update' list.pk %}"
+                    href="{% url 'tasklist:update' list.pk %}"
                     class="inline-flex size-8 items-center justify-center rounded-md text-faint transition-colors duration-150 hover:bg-white hover:text-ink focus:outline-none"
                     aria-label="Editar lista {{ list.title }}"
                     title="Editar lista"
@@ -95,7 +95,7 @@
                     </svg>
                   </a>
                   <a
-                    href="{% url 'tasklist_delete' list.pk %}"
+                    href="{% url 'tasklist:delete' list.pk %}"
                     class="inline-flex size-8 items-center justify-center rounded-md text-faint transition-colors duration-150 hover:bg-danger-soft hover:text-danger focus:outline-none"
                     aria-label="Eliminar lista {{ list.title }}"
                     title="Eliminar lista"
@@ -113,7 +113,7 @@
                 {% for task in list.tasks.all|slice:":4" %}
                   <li>
                     <a
-                      href="{% url 'tasklist_detail' list.pk %}"
+                      href="{% url 'tasklist:detail' list.pk %}"
                       class="block rounded-lg border border-line bg-white px-3 py-2.5 text-sm transition-colors duration-150 hover:border-line-strong focus:outline-none"
                     >
                       <span class="line-clamp-2 font-medium leading-snug text-ink">{{ task.title }}</span>
@@ -129,7 +129,7 @@
                 {% if list.tasks.count > 4 %}
                   <li>
                     <a
-                      href="{% url 'tasklist_detail' list.pk %}"
+                      href="{% url 'tasklist:detail' list.pk %}"
                       class="block rounded py-1.5 text-center text-xs font-medium text-muted transition-colors duration-150 hover:text-brand-deep focus:outline-none"
                     >
                       Ver las {{ list.tasks.count }} tarjetas
@@ -141,7 +141,7 @@
               {# List footer #}
               <div class="mt-auto border-t border-line p-2.5">
                 <a
-                  href="{% url 'task_create' list.pk %}"
+                  href="{% url 'task:create' list.pk %}"
                   class="flex w-full items-center gap-1.5 rounded-lg px-2.5 py-2 text-sm font-medium text-muted transition-colors duration-150 hover:bg-white hover:text-ink focus:outline-none"
                 >
                   <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -157,7 +157,7 @@
         {# Add another list tile #}
         <li class="min-w-0">
           <a
-            href="{% url 'tasklist_create' board.pk %}"
+            href="{% url 'tasklist:create' board.pk %}"
             class="flex h-full min-h-[12rem] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-line-strong bg-surface px-4 py-8 text-sm font-medium text-muted transition-colors duration-150 hover:border-brand/40 hover:bg-brand-soft/50 hover:text-brand-deep focus:outline-none"
           >
             <span
@@ -188,7 +188,7 @@
           Crea tu primera lista para organizar tarjetas y tareas en columnas.
         </p>
         <a
-          href="{% url 'tasklist_create' board.pk %}"
+          href="{% url 'tasklist:create' board.pk %}"
           class="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
         >
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">

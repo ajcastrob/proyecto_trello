@@ -43,7 +43,7 @@ class BoardCreateView(CreateView):
         return response
 
     def get_success_url(self):
-        return reverse("board_detail", kwargs={"pk": self.object.pk})
+        return reverse("board:detail", kwargs={"pk": self.object.pk})
 
 
 class BoardUpdateView(UpdateView):
@@ -65,7 +65,7 @@ class BoardUpdateView(UpdateView):
         return response
 
     def get_success_url(self):
-        return reverse("board_detail", kwargs={"pk": self.object.pk})
+        return reverse("board:detail", kwargs={"pk": self.object.pk})
 
 
 class BoardDeleteView(SuccessMessageMixin, DeleteView):
@@ -86,4 +86,4 @@ class BoardDeleteView(SuccessMessageMixin, DeleteView):
         return response
 
     def get_success_url(self):
-        return reverse("board_list")
+        return reverse("board:list")

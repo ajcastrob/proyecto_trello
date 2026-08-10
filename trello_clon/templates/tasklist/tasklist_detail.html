@@ -9,13 +9,13 @@
     <nav class="mb-6" aria-label="Miga de pan">
       <ol class="flex flex-wrap items-center gap-1.5 text-sm text-faint">
         <li>
-          <a href="{% url 'board_list' %}" class="rounded transition-colors duration-150 hover:text-ink focus:outline-none">
+          <a href="{% url 'board:list' %}" class="rounded transition-colors duration-150 hover:text-ink focus:outline-none">
             Tableros
           </a>
         </li>
         <li aria-hidden="true" class="text-line-strong">/</li>
         <li>
-          <a href="{% url 'board_detail' tasklist.board_id %}" class="max-w-[12rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none">
+          <a href="{% url 'board:detail' tasklist.board_id %}" class="max-w-[12rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none">
             {{ tasklist.board.title }}
           </a>
         </li>
@@ -39,7 +39,7 @@
         </div>
 
         <a
-          href="{% url 'task_create' tasklist.pk %}"
+          href="{% url 'task:create' tasklist.pk %}"
           class="inline-flex items-center justify-center gap-2 self-start rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none sm:self-auto"
         >
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
@@ -67,7 +67,7 @@
 
                 <div class="flex shrink-0 items-center gap-1">
                   <a
-                    href="{% url 'task_update' task.pk %}"
+                    href="{% url 'task:update' task.pk %}"
                     class="inline-flex size-8 items-center justify-center rounded-lg text-faint transition-colors duration-150 hover:bg-surface-2 hover:text-ink focus:outline-none"
                     aria-label="Editar tarjeta {{ task.title }}"
                     title="Editar tarjeta"
@@ -78,7 +78,7 @@
                     </svg>
                   </a>
                   <a
-                    href="{% url 'task_delete' task.pk %}"
+                    href="{% url 'task:delete' task.pk %}"
                     class="inline-flex size-8 items-center justify-center rounded-lg text-faint transition-colors duration-150 hover:bg-danger-soft hover:text-danger focus:outline-none"
                     aria-label="Eliminar tarjeta {{ task.title }}"
                     title="Eliminar tarjeta"
@@ -109,7 +109,7 @@
           Añade la primera tarjeta para empezar a trabajar en esta columna.
         </p>
         <a
-          href="{% url 'task_create' tasklist.pk %}"
+          href="{% url 'task:create' tasklist.pk %}"
           class="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
         >
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
