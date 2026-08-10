@@ -15,14 +15,13 @@
 </head>
   <body class="bg-stone-950 text-stone-100 font-sans antialiased relative flex flex-col min-h-screen"> 
       {% include "_includes/_main_menu.html" %}  
-      <main class="flex-1 w-full">
-          <div class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
-              <h1>{% block head_h1 %}{% endblock %}</h1>  
-                  {% include "_includes/_messages.html" %} 
-                  {% block page_content%} 
+      <main class="flex-1 w-full flex flex-col min-h-0">
+          <div class="{% block content_container_class %}mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8 py-8{% endblock %}">
+              <h1>{% block head_h1 %}{% endblock %}</h1>
+                  {% include "_includes/_messages.html" %}
+                  {% block page_content %}
                   {% endblock %}
-          </div> 
-      
+          </div>
       </main> 
 
       {% include "_includes/_footer.html" %}

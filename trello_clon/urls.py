@@ -28,6 +28,9 @@ from boards.views import (
     TaskCreateView,
     TaskDeleteView,
     TaskUpdateView,
+    TaskListCreateView,
+    TaskListUpdateView,
+    TaskListDeleteView,
 )
 
 urlpatterns = [
@@ -53,6 +56,21 @@ urlpatterns = [
         "tasklist/task/update/<pk>/",
         TaskUpdateView.as_view(),
         name="task_update",
+    ),
+    path(
+        "board/<int:board_pk>/list/create/",
+        TaskListCreateView.as_view(),
+        name="tasklist_create",
+    ),
+    path(
+        "tasklist/list/update/<pk>/",
+        TaskListUpdateView.as_view(),
+        name="tasklist_update",
+    ),
+    path(
+        "tasklist/list/delete/<pk>/",
+        TaskListDeleteView.as_view(),
+        name="tasklist_delete",
     ),
 ] + debug_toolbar_urls()
 

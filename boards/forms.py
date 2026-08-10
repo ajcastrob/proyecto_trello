@@ -1,7 +1,8 @@
 from django import forms
-from boards.models import Task
+from boards.models import Task, TaskList
 
 
+# Dark stone UI (TaskApp)
 INPUT_CLASSES = (
     "w-full rounded-lg bg-stone-950 border border-stone-700 px-3 py-2 "
     "text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 "
@@ -29,4 +30,21 @@ class TaskCreateForm(forms.ModelForm):
                     "aria-label": "Añade comentarios",
                 }
             ),
+        }
+
+
+class TaskListCreateForm(forms.ModelForm):
+    class Meta:
+        model = TaskList
+        fields = ["title"]
+        labels = {"title": "Nombre de la lista"}
+        widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "class": INPUT_CLASSES,
+                    "placeholder": "Ej. Por hacer, En progreso…",
+                    "aria-label": "Nombre de la lista",
+                    "autocomplete": "off",
+                }
+            )
         }
