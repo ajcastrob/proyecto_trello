@@ -6,9 +6,7 @@ function getCookie(name) {
 }
 
 function collectOrder(listEl) {
-  return [...listEl.children]
-    .map((c) => c.dataset.pk)
-    .filter(Boolean);
+  return [...listEl.children].map((c) => c.dataset.pk).filter(Boolean);
 }
 
 function persistList(listEl) {
