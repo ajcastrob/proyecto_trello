@@ -1,5 +1,5 @@
 {% extends "core/layout.html" %}
-
+{% load static %} 
 {% block head_title %}{{ board.title }} · TaskApp{% endblock %}
 {% block head_h1 %}{{ board.title }}{% endblock %}
 
@@ -60,13 +60,16 @@
         aria-label="Listas del tablero {{ board.title }}"
       >
         {% for list in board.lists.all %}
-          <li class="rise-in min-w-0" style="animation-delay: {{ forloop.counter0|stringformat:'d' }}0ms">
+          <li  class="rise-in min-w-0" style="animation-delay: {{ forloop.counter0|stringformat:'d' }}0ms"
+          >
             <section
               class="flex h-full flex-col rounded-xl border border-line bg-surface-2 transition-colors duration-200 hover:border-line-strong"
               aria-labelledby="list-title-{{ list.pk }}"
             >
               {# List header #}
-              <div class="flex items-start gap-1 border-b border-line px-3 pb-2.5 pt-3.5">
+              <div
+                    class="flex items-start gap-1 border-b border-line px-3 pb-2.5 pt-3.5"
+              >
                 <a
                   href="{% url 'tasklist:detail' list.pk %}"
                   id="list-title-{{ list.pk }}"
@@ -108,13 +111,16 @@
                 </div>
               </div>
 
-              {# Task cards #}
-              <ul class="flex-1 space-y-2 px-3 py-3">
-                {% for task in list.tasks.all|slice:":4" %}
-                  <li>
+              {# Task cards (sortable: within list + across lists) #}
+              <ul
+                class="flex min-h-[4.5rem] flex-1 flex-col gap-2 px-3 py-3"
+                data-sortable="{{ list.pk }}"
+              >
+                {% for task in list.tasks.all %}
+                  <li data-pk="{{ task.pk }}">
                     <a
                       href="{% url 'tasklist:detail' list.pk %}"
-                      class="block rounded-lg border border-line bg-white px-3 py-2.5 text-sm transition-colors duration-150 hover:border-line-strong focus:outline-none"
+                      class="block cursor-grab rounded-lg border border-line bg-white px-3 py-2.5 text-sm transition-colors duration-150 hover:border-line-strong focus:outline-none active:cursor-grabbing"
                     >
                       <span class="line-clamp-2 font-medium leading-snug text-ink">{{ task.title }}</span>
                       {% if task.description %}
@@ -122,20 +128,7 @@
                       {% endif %}
                     </a>
                   </li>
-                {% empty %}
-                  <li class="px-1 py-3 text-center text-xs text-faint">Sin tarjetas todavía</li>
                 {% endfor %}
-
-                {% if list.tasks.count > 4 %}
-                  <li>
-                    <a
-                      href="{% url 'tasklist:detail' list.pk %}"
-                      class="block rounded py-1.5 text-center text-xs font-medium text-muted transition-colors duration-150 hover:text-brand-deep focus:outline-none"
-                    >
-                      Ver las {{ list.tasks.count }} tarjetas
-                    </a>
-                  </li>
-                {% endif %}
               </ul>
 
               {# List footer #}
@@ -200,4 +193,7 @@
     {% endif %}
 
   </div>
+{% endblock %}
+{% block extra_js %}
+  <script src="{% static 'js/dist/app.js' %}" defer></script>
 {% endblock %}

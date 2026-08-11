@@ -3,6 +3,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+import json
 from boards.forms import TaskCreateForm
 from boards.models import Task, TaskList
 
@@ -85,3 +88,27 @@ class TaskDeleteView(SuccessMessageMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("tasklist:detail", kwargs={"pk": self.object.task_list_id})
+
+
+@require_POST
+def task_reorder(request, pk):
+    """Persiste orden de tareas en una lista (y mueve entre listas si vienen de otra)."""
+    try:
+        data = json.loads(request.body)
+        order = data.get("order", [])
+    except (json.JSONDecodeError, ValueError):
+        return JsonResponse({"ok": False, "error": "invalid json"}, status=400)
+
+    try:
+        tasklist = TaskList.objects.get(pk=pk, board__owner=request.user)
+    except TaskList.DoesNotExist:
+        return JsonResponse({"ok": False, "error": "not found"}, status=404)
+
+    for i, task_id in enumerate(order, start=1):
+        # Owner check via board; reasigna task_list para moves cross-list
+        Task.objects.filter(
+            pk=task_id,
+            task_list__board__owner=request.user,
+        ).update(task_list_id=tasklist.pk, position=i)
+
+    return JsonResponse({"ok": True})

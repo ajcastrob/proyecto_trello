@@ -4,10 +4,13 @@ from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from boards.forms import BoardCreateForm
-from boards.models import Board
+from boards.models import Board, TaskList, Task
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from django.db.models import Prefetch
+import json
 
 
-# Create your views here.
 class BoardListView(ListView):
     template_name = "board/board_list.html"
     model = Board
@@ -23,7 +26,14 @@ class BoardDetailView(DetailView):
     context_object_name = "board"
 
     def get_queryset(self):
-        return Board.objects.prefetch_related("lists__tasks")
+        return Board.objects.prefetch_related(
+            Prefetch(
+                "lists",
+                queryset=TaskList.objects.order_by("position").prefetch_related(
+                    Prefetch("tasks", queryset=Task.objects.order_by("position"))
+                ),
+            )
+        )
 
 
 class BoardCreateView(CreateView):
@@ -87,3 +97,19 @@ class BoardDeleteView(SuccessMessageMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("board:list")
+
+
+@require_POST
+def board_reorder(request, pk):
+    try:
+        data = json.loads(request.body)
+        order = data.get("order", [])
+    except (json.JSONDecodeError, ValueError):
+        return JsonResponse({"ok": False, "error": "invalid json"}, status=400)
+
+    for i, list_id in enumerate(order, start=1):
+        TaskList.objects.filter(
+            pk=list_id, board__owner=request.user, board__pk=pk
+        ).update(position=i)
+
+    return JsonResponse({"ok": True})
