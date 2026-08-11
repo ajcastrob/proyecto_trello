@@ -153,7 +153,7 @@ AUTH_USER_MODEL = "accounts.UserProfile"
 
 UNFOLD = {
     "SITE_TITLE": "Trello-clon",
-    "SITE_HEADER": "TrelloApp",
+    "SITE_HEADER": "TaskApp",
     "SITE_SUBHEADER": "Panel de Administración",
     "SITE_URL": "/",
 }

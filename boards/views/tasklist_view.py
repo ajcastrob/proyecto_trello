@@ -1,10 +1,11 @@
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.db.models import Prefetch
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from boards.forms import TaskListCreateForm
-from boards.models import TaskList, Board
+from boards.models import TaskList, Board, Task
 
 
 class TaskListDetailView(DetailView):
@@ -12,6 +13,10 @@ class TaskListDetailView(DetailView):
     template_name = "tasklist/tasklist_detail.html"
     context_object_name = "tasklist"
 
+    def get_queryset(self):
+        return TaskList.objects.prefetch_related(
+            Prefetch("tasks", queryset=Task.objects.order_by("position"))
+        )
 
 class TaskListCreateView(CreateView):
     model = TaskList

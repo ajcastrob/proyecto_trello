@@ -6,6 +6,7 @@ from ..views import (
     BoardCreateView,
     BoardUpdateView,
     BoardDeleteView,
+    board_reorder,
 )
 
 app_name = "board"
@@ -16,4 +17,5 @@ urlpatterns = [
     path("create/", BoardCreateView.as_view(), name="create"),
     path("update/<pk>/", BoardUpdateView.as_view(), name="update"),
     path("delete/<pk>/", BoardDeleteView.as_view(), name="delete"),
+    path("details/<pk>/reorder/", board_reorder, name="reorder"),
 ]
