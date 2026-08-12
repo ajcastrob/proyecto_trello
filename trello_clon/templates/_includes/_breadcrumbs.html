@@ -1,0 +1,53 @@
+<nav class="mb-6" aria-label="Miga de pan">
+  <ol class="flex flex-wrap items-center gap-1.5 text-sm text-faint">
+    <li>
+      <a
+        href="{% url 'board:list' %}"
+        class="rounded transition-colors duration-150 hover:text-ink focus:outline-none"
+      >
+        Tableros
+      </a>
+    </li>
+
+    {% if board %}
+      <li aria-hidden="true" class="text-line-strong">/</li>
+      <li>
+        <a
+          href="{% url 'board:detail' board.pk %}"
+          class="max-w-[12rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none"
+        >
+          {{ board.title }}
+        </a>
+      </li>
+    {% elif tasklist %}
+      <li aria-hidden="true" class="text-line-strong">/</li>
+      <li>
+        <a
+          href="{% url 'board:detail' tasklist.board_id %}"
+          class="max-w-[12rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none"
+        >
+          {{ tasklist.board.title }}
+        </a>
+      </li>
+    {% endif %}
+
+    {% if tasklist %}
+      <li aria-hidden="true" class="text-line-strong">/</li>
+      <li>
+        <a
+          href="{% url 'tasklist:detail' tasklist.pk %}"
+          class="max-w-[12rem] truncate rounded transition-colors duration-150 hover:text-ink focus:outline-none"
+        >
+          {{ tasklist.title }}
+        </a>
+      </li>
+    {% endif %}
+
+    {% if current %}
+      <li aria-hidden="true" class="text-line-strong">/</li>
+      <li class="max-w-[14rem] truncate font-medium text-muted sm:max-w-none" aria-current="page">
+        {{ current }}
+      </li>
+    {% endif %}
+  </ol>
+</nav>

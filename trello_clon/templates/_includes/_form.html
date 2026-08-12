@@ -1,0 +1,36 @@
+<div class="rounded-xl border border-line bg-surface p-6 sm:p-8">
+  <h1 class="font-display text-2xl font-bold tracking-tight text-ink">{{ title }}</h1>
+  <p class="mt-1 text-sm text-muted"> {{ description }}</p>
+    <form action="" method="POST" class="mt-6 space-y-4">
+            {% csrf_token %}
+
+            {% for field in form.visible_fields %}
+              <div>
+                <label for="{{ field.id_for_label }}" class="mb-1 block text-sm font-medium text-ink">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}
+                  <p class="mt-1 text-sm text-danger">{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endfor %}
+
+            {% for error in form.non_field_errors %}
+              <p class="text-sm text-danger">{{ error }}</p>
+            {% endfor %}
+
+            <div class="flex items-center gap-3 pt-2">
+              <button
+                type="submit"
+                class="rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
+              >
+                {{ button }} 
+              </button>
+              <a
+                href="{{link}}"
+                class="rounded-lg px-4 py-2.5 text-sm font-medium text-muted transition-colors duration-150 hover:text-ink focus:outline-none"
+              >
+                Cancelar
+              </a>
+            </div>
+    </form>
+</div>

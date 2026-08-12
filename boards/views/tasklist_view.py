@@ -4,10 +4,13 @@ from django.db.models import Prefetch
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from boards.forms import TaskListCreateForm
 from boards.models import TaskList, Board, Task
 
 
+@method_decorator(login_required, name="dispatch")
 class TaskListDetailView(DetailView):
     model = TaskList
     template_name = "tasklist/tasklist_detail.html"
@@ -18,6 +21,8 @@ class TaskListDetailView(DetailView):
             Prefetch("tasks", queryset=Task.objects.order_by("position"))
         )
 
+
+@method_decorator(login_required, name="dispatch")
 class TaskListCreateView(CreateView):
     model = TaskList
     form_class = TaskListCreateForm
@@ -46,6 +51,7 @@ class TaskListCreateView(CreateView):
         return reverse("board:detail", kwargs={"pk": self.kwargs["board_pk"]})
 
 
+@method_decorator(login_required, name="dispatch")
 class TaskListUpdateView(UpdateView):
     model = TaskList
     form_class = TaskListCreateForm
@@ -70,6 +76,7 @@ class TaskListUpdateView(UpdateView):
         return reverse("board:detail", kwargs={"pk": self.object.board_id})
 
 
+@method_decorator(login_required, name="dispatch")
 class TaskListDeleteView(SuccessMessageMixin, DeleteView):
     model = TaskList
     template_name = "tasklist/tasklist_confirm_delete.html"
