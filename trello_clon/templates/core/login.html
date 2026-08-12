@@ -19,33 +19,8 @@
         <h1 class="font-display text-2xl font-bold tracking-tight text-ink">TaskApp</h1>
         <p class="mt-1 text-sm text-muted">Entra con tu usuario y contraseña</p>
       </div>
-
-      <form action="" method="POST" class="space-y-4">
-        {% csrf_token %}
-
-        {% for field in form.visible_fields %}
-          <div>
-            <label for="{{ field.id_for_label }}" class="mb-1 block text-sm font-medium text-ink">{{ field.label }}</label>
-            {{ field }}
-            {% for error in field.errors %}
-              <p class="mt-1 text-sm text-danger">{{ error }}</p>
-            {% endfor %}
-          </div>
-        {% endfor %}
-
-        {% for error in form.non_field_errors %}
-          <p class="text-sm text-danger">{{ error }}</p>
-        {% endfor %}
-
-        <button
-          type="submit"
-          class="w-full rounded-lg bg-brand py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
-        >
-          Iniciar sesión
-        </button>
-      </form>
-    </div>
-
+          {% include "_includes/_form.html"  with button="Iniciar Sessión" %}
+      </div>
     <p class="mt-4 text-center text-sm text-muted">
       ¿No tienes cuenta?
       <a href="{% url 'register' %}" class="font-semibold text-brand-deep hover:text-brand">Crea una</a>

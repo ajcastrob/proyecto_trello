@@ -1,15 +1,19 @@
-from django.views.generic import DetailView, ListView
+from django.shortcuts import redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.conf import settings
 import json
 from boards.forms import TaskCreateForm
 from boards.models import Task, TaskList
 
 
+@method_decorator(login_required, name="dispatch")
 class TaskCreateView(CreateView):
     model = Task
     form_class = TaskCreateForm
@@ -43,6 +47,7 @@ class TaskCreateView(CreateView):
         return reverse("tasklist:detail", kwargs={"pk": self.kwargs["list_pk"]})
 
 
+@method_decorator(login_required, name="dispatch")
 class TaskUpdateView(UpdateView):
     model = Task
     form_class = TaskCreateForm
@@ -65,6 +70,7 @@ class TaskUpdateView(UpdateView):
         return reverse("tasklist:detail", kwargs={"pk": self.object.task_list_id})
 
 
+@method_decorator(login_required, name="dispatch")
 class TaskDeleteView(SuccessMessageMixin, DeleteView):
     model = Task
     template_name = "task/task_confirm_delete.html"
@@ -93,6 +99,13 @@ class TaskDeleteView(SuccessMessageMixin, DeleteView):
 @require_POST
 def task_reorder(request, pk):
     """Persiste orden de tareas en una lista (y mueve entre listas si vienen de otra)."""
+
+    # Verificar si está logueado
+    if not request.user.is_authenticated:
+        login_url = settings.LOGIN_URL
+        current_path = request.path
+        return redirect(f"{login_url}?next={current_path}")
+
     try:
         data = json.loads(request.body)
         order = data.get("order", [])
