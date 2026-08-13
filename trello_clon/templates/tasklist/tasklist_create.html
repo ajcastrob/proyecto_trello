@@ -7,7 +7,6 @@
   <div class="mx-auto w-full max-w-xl">
 
     {% include "_includes/_breadcrumbs.html" with current="Nueva lista" board=board %}
-
     {% url 'board:detail' board.pk as my_url %}
     {% include "_includes/_form.html" with title="Nueva lista" description="Una columna para agrupar tarjetas, por ejemplo «Por hacer»." link=my_url button="Crear lista" %}
 

@@ -7,7 +7,6 @@
   <div class="mx-auto w-full max-w-xl">
 
     {% include "_includes/_breadcrumbs.html" with current="Nueva tarjeta" board=tasklist.board tasklist=tasklist %}
-
     {% with desc_inicio="Añade una tarea a la lista «" desc_fin="»." %}
       {% url 'tasklist:detail' tasklist.pk as my_url %}
       {% include "_includes/_form.html" with title="Nueva tarjeta" description=desc_inicio|add:tasklist.title|add:desc_fin link=my_url button="Crear Tarjeta" %}

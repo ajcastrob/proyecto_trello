@@ -76,30 +76,9 @@
           </li>
         {% endfor %}
       </ul>
-    {% else %}
-      <div class="rounded-xl border border-dashed border-line-strong bg-surface px-6 py-16 text-center">
-        <span
-          class="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-brand-soft text-brand-deep"
-          aria-hidden="true"
-        >
-          <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-            <path d="M4 7h16M4 12h16M4 17h10" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <h2 class="font-display text-lg font-semibold text-ink">Esta lista está vacía</h2>
-        <p class="mx-auto mt-2 max-w-sm text-sm text-muted">
-          Añade la primera tarjeta para empezar a trabajar en esta columna.
-        </p>
-        <a
-          href="{% url 'task:create' tasklist.pk %}"
-          class="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
-        >
-          <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-            <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
-          </svg>
-          Crear tarjeta
-        </a>
-      </div>
+    {% else %}    
+      {% url 'task:create' tasklist.pk as my_url %}
+      {% include "_includes/_empty_state.html" with title="Esta lista esta vacía" description="Añade la primera tarjeta para empezar a trabajar en esta columna" link=my_url button="Crear tarjeta" %} 
     {% endif %}
 
   </div>

@@ -7,7 +7,6 @@
   <div class="mx-auto w-full max-w-xl">
 
     {% include "_includes/_breadcrumbs.html" with current="Editar tarjeta" board=task.task_list.board tasklist=task.task_list %}
-
     {% url 'tasklist:detail' task.task_list_id as my_url %}
     {% include "_includes/_form.html" with title="Editar tarjeta" description="Actualiza el título o la descripción de la tarea" link=my_url button="Guardar cambios" %}
 

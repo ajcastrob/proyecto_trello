@@ -7,7 +7,6 @@
   <div class="mx-auto w-full max-w-xl">
 
     {% include "_includes/_breadcrumbs.html" with current="Eliminar lista" board=tasklist.board %}
-
     {% url 'board:detail' tasklist.board_id as my_url %}
     {% with title_inicio="¿Eliminar la lista «" title_fin="»?" %}
       {% include "_includes/_confirm_delete.html" with title=title_inicio|add:tasklist.title|add:title_fin description="Se borrarán también sus tarjetas. Esta acción no se puede deshacer." button="Eliminar lista" link=my_url %}

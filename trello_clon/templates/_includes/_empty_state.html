@@ -1,0 +1,26 @@
+<div class="rounded-xl border border-dashed border-line-strong bg-surface px-6 py-16 text-center">
+        <span
+          class="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-brand-soft text-brand-deep"
+          aria-hidden="true"
+        >
+          <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M3 5a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5z" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      <h2 class="font-display text-lg font-semibold text-ink">{{title}}</h2>
+        <p class="mx-auto mt-2 max-w-sm text-sm text-muted">
+            {{description}}
+        </p>
+        {% if link %}
+            <a
+              href="{{ link }}"
+              class="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-deep focus:outline-none"
+            >
+              <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
+              </svg>
+              {{ button }} 
+            </a>
+        {% endif %}
+</div>
+

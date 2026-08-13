@@ -146,22 +146,8 @@
         {% endfor %}
       </ul>
     {% else %}
-      {# ── Empty state ── #}
-      <div class="rounded-xl border border-dashed border-line-strong bg-surface px-6 py-16 text-center">
-        <span
-          class="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-brand-soft text-brand-deep"
-          aria-hidden="true"
-        >
-          <svg class="size-6" viewBox="0 0 24 24" fill="currentColor">
-            <rect x="3" y="3" width="7" height="18" rx="1.5" opacity="0.95"/>
-            <rect x="14" y="3" width="7" height="12" rx="1.5" opacity="0.75"/>
-          </svg>
-        </span>
-        <h2 class="font-display text-lg font-semibold text-ink">Aún no tienes tableros</h2>
-        <p class="mx-auto mt-2 max-w-sm text-sm text-muted">
-          Cuando crees tu primer tablero, aparecerá aquí listo para organizar tareas y proyectos.
-        </p>
-      </div>
+      {# ── Empty state ── #} 
+      {% include "_includes/_empty_state.html" with title="Aún no tienes tableros" description="Cuando crees tu primer tablero, aparecerá aquí listo para organizar tareas y proyectos" link="" button="" %} 
     {% endif %}
 
     <div class="mt-8">
