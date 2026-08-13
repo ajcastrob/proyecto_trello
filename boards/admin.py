@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Board, Task, TaskList
+from .models import Board, Task, TaskList, Label
 from unfold.admin import ModelAdmin
 
 
@@ -18,5 +18,12 @@ class TaskListAdmin(ModelAdmin):
 
 @admin.register(Task)
 class TaskAdmin(ModelAdmin):
-    model = TaskList
-    list_display = ["title", "position", "created_at"]
+    model = Task
+    list_display = ["title", "position", "due_date"]
+    filter_horizontal = ["labels"]
+
+
+@admin.register(Label)
+class LabelAdmin(ModelAdmin):
+    model = Label
+    list_display = ["name", "board", "color"]

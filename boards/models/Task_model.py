@@ -17,6 +17,7 @@ class Task(models.Model):
     title = models.CharField(verbose_name="título", max_length=200)
     description = models.TextField(verbose_name="descripción", blank=True)
     position = models.PositiveIntegerField(verbose_name="posición", default=0)
+    labels = models.ManyToManyField("Label", blank=True, related_name="tasks")
     priority = models.CharField(
         verbose_name="prioridad", choices=PRIORITY, default="medium", max_length=10
     )

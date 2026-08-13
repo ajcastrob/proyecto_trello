@@ -1,0 +1,8 @@
+{% for label in task.labels.all %}
+  <span class="inline-flex items-center rounded-md px-1.5 py-0.5 text-[11px] font-medium
+    {% if label.color == 'danger' %}bg-danger-soft text-danger
+    {% elif label.color == 'brand' %}bg-brand-soft text-brand-deep
+    {% elif label.color == 'accent' %}bg-accent-soft text-accent
+    {% else %}bg-surface-2 text-muted
+    {% endif %}">{{ label.name }}</span>
+{% endfor %}

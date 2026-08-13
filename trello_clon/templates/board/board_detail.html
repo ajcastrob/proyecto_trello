@@ -114,6 +114,7 @@
                       {% if task.due_date %}
                         <span class="mt-1.5 block">{% include "_includes/_due_date.html" with task=task %}</span>
                       {% endif %}
+                      <span class="mt-1.5 flex flex-wrap gap-1">{% include "_includes/_label_chips.html" with task=task %}</span>
                       {% if task.description %}
                         <span class="mt-1 block line-clamp-1 text-xs leading-relaxed text-muted">{{ task.description }}</span>
                       {% endif %}

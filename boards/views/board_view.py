@@ -36,7 +36,12 @@ class BoardDetailView(DetailView):
             Prefetch(
                 "lists",
                 queryset=TaskList.objects.order_by("position").prefetch_related(
-                    Prefetch("tasks", queryset=Task.objects.order_by("position"))
+                    Prefetch(
+                        "tasks",
+                        queryset=Task.objects.order_by("position").prefetch_related(
+                            "labels"
+                        ),
+                    )
                 ),
             )
         )

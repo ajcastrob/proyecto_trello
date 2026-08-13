@@ -18,7 +18,10 @@ class TaskListDetailView(DetailView):
 
     def get_queryset(self):
         return TaskList.objects.prefetch_related(
-            Prefetch("tasks", queryset=Task.objects.order_by("position"))
+            Prefetch(
+                "tasks",
+                queryset=Task.objects.order_by("position").prefetch_related("labels"),
+            )
         )
 
 

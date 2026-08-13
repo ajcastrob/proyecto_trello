@@ -19,6 +19,14 @@ class TaskCreateView(CreateView):
     form_class = TaskCreateForm
     template_name = "task/task_create.html"
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        tasklist = TaskList.objects.select_related("board").get(
+            pk=self.kwargs["list_pk"]
+        )
+        kwargs["board"] = tasklist.board
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["tasklist"] = TaskList.objects.select_related("board").get(
@@ -56,6 +64,11 @@ class TaskUpdateView(UpdateView):
 
     def get_queryset(self):
         return Task.objects.select_related("task_list__board")
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["board"] = self.object.task_list.board
+        return kwargs
 
     def form_valid(self, form):
         response = super().form_valid(form)
