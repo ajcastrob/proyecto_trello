@@ -111,6 +111,9 @@
                         <span class="line-clamp-2 font-medium leading-snug text-ink">{{ task.title }}</span>
                         {% include "_includes/_priority_badge.html" with task=task %}
                       </span>
+                      {% if task.due_date %}
+                        <span class="mt-1.5 block">{% include "_includes/_due_date.html" with task=task %}</span>
+                      {% endif %}
                       {% if task.description %}
                         <span class="mt-1 block line-clamp-1 text-xs leading-relaxed text-muted">{{ task.description }}</span>
                       {% endif %}

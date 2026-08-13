@@ -6,7 +6,7 @@ from boards.models import Task
 class TaskCreateForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ["title", "description", "priority"]
+        fields = ["title", "description", "priority", "due_date"]
         widgets = {
             "title": forms.TextInput(
                 attrs={
@@ -27,6 +27,14 @@ class TaskCreateForm(forms.ModelForm):
                 attrs={
                     "class": INPUT_CLASSES,
                     "aria-label": "Prioridad",
+                }
+            ),
+            "due_date": forms.DateInput(
+                format="%Y-%m-%d",
+                attrs={
+                    "class": INPUT_CLASSES,
+                    "type": "date",
+                    "aria-label": "Fecha límite",
                 }
             ),
         }

@@ -1,0 +1,6 @@
+{% if task.due_date %}
+  <time
+    datetime="{{ task.due_date|date:'Y-m-d' }}"
+    class="inline-flex items-center rounded-md px-1.5 py-0.5 text-[11px] font-medium {% if task.is_overdue %}bg-danger-soft text-danger{% else %}bg-surface-2 text-muted{% endif %}"
+  >{{ task.due_date|date:"d M" }}</time>
+{% endif %}

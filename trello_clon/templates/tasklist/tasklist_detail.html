@@ -42,7 +42,10 @@
                   <h2 class="font-display text-base font-semibold tracking-tight text-ink">
                     {{ task.title }}
                   </h2>
-                  <p class="mt-1.5">{% include "_includes/_priority_badge.html" with task=task %}</p>
+                  <p class="mt-1.5 flex flex-wrap items-center gap-1.5">
+                    {% include "_includes/_priority_badge.html" with task=task %}
+                    {% include "_includes/_due_date.html" with task=task %}
+                  </p>
                   {% if task.description %}
                     <p class="mt-1.5 text-sm leading-relaxed text-muted">{{ task.description }}</p>
                   {% endif %}
