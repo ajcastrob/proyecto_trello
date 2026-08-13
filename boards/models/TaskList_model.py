@@ -4,7 +4,9 @@ from .Board_model import Board
 
 class TaskList(models.Model):
     board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name="lists")
-    title = models.CharField(max_length=120)
+    title = models.CharField(
+        max_length=120,
+    )
     position = models.PositiveIntegerField(default=0)
 
     class Meta:

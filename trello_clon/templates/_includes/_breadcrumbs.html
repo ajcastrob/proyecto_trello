@@ -42,12 +42,13 @@
         </a>
       </li>
     {% endif %}
-
-    {% if current %}
-      <li aria-hidden="true" class="text-line-strong">/</li>
-      <li class="max-w-[14rem] truncate font-medium text-muted sm:max-w-none" aria-current="page">
-        {{ current }}
-      </li>
+    {% if  current != board.title %}   
+      {% if  current != tasklist.title %}
+          <li aria-hidden="true" class="text-line-strong">/</li>
+          <li class="max-w-[14rem] truncate font-medium text-muted sm:max-w-none" aria-current="page">
+            {{ current }}
+          </li>
+      {% endif %}
     {% endif %}
   </ol>
 </nav>
