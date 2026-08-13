@@ -6,7 +6,7 @@ from boards.models import Task
 class TaskCreateForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ["title", "description"]
+        fields = ["title", "description", "priority"]
         widgets = {
             "title": forms.TextInput(
                 attrs={
@@ -21,6 +21,12 @@ class TaskCreateForm(forms.ModelForm):
                     "placeholder": "Añade un comentario para la tarea",
                     "rows": 5,
                     "aria-label": "Añade comentarios",
+                }
+            ),
+            "priority": forms.Select(
+                attrs={
+                    "class": INPUT_CLASSES,
+                    "aria-label": "Prioridad",
                 }
             ),
         }

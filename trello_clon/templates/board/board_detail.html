@@ -107,7 +107,10 @@
                       href="{% url 'tasklist:detail' list.pk %}"
                       class="block cursor-grab rounded-lg border border-line bg-white px-3 py-2.5 text-sm transition-colors duration-150 hover:border-line-strong focus:outline-none active:cursor-grabbing"
                     >
-                      <span class="line-clamp-2 font-medium leading-snug text-ink">{{ task.title }}</span>
+                      <span class="flex items-start justify-between gap-2">
+                        <span class="line-clamp-2 font-medium leading-snug text-ink">{{ task.title }}</span>
+                        {% include "_includes/_priority_badge.html" with task=task %}
+                      </span>
                       {% if task.description %}
                         <span class="mt-1 block line-clamp-1 text-xs leading-relaxed text-muted">{{ task.description }}</span>
                       {% endif %}

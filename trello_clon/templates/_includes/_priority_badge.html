@@ -1,0 +1,9 @@
+{% if task.priority == "urgent" %}
+  <span class="inline-flex items-center rounded-md bg-danger-soft px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-danger">{{ task.get_priority_display }}</span>
+{% elif task.priority == "high" %}
+  <span class="inline-flex items-center rounded-md bg-brand-soft px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-brand-deep">{{ task.get_priority_display }}</span>
+{% elif task.priority == "low" %}
+  <span class="inline-flex items-center rounded-md bg-surface-2 px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted">{{ task.get_priority_display }}</span>
+{% else %}
+  <span class="inline-flex items-center rounded-md bg-accent-soft px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-accent">{{ task.get_priority_display }}</span>
+{% endif %}

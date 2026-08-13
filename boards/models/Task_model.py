@@ -1,6 +1,13 @@
 from django.db import models
 from .TaskList_model import TaskList
 
+PRIORITY = [
+    ("low", "Baja"),
+    ("medium", "Media"),
+    ("high", "Alta"),
+    ("urgent", "Urgente"),
+]
+
 
 class Task(models.Model):
     task_list = models.ForeignKey(
@@ -9,6 +16,9 @@ class Task(models.Model):
     title = models.CharField(verbose_name="título", max_length=200)
     description = models.TextField(verbose_name="descripción", blank=True)
     position = models.PositiveIntegerField(verbose_name="posición", default=0)
+    priority = models.CharField(
+        verbose_name="prioridad", choices=PRIORITY, default="medium", max_length=10
+    )
     created_at = models.DateTimeField(
         verbose_name="Fecha de creación", auto_now_add=True
     )

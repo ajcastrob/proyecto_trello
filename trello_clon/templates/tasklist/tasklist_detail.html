@@ -42,6 +42,7 @@
                   <h2 class="font-display text-base font-semibold tracking-tight text-ink">
                     {{ task.title }}
                   </h2>
+                  <p class="mt-1.5">{% include "_includes/_priority_badge.html" with task=task %}</p>
                   {% if task.description %}
                     <p class="mt-1.5 text-sm leading-relaxed text-muted">{{ task.description }}</p>
                   {% endif %}
