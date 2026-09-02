@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from urllib.parse import unquote, urlparse
 from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,12 +25,22 @@ TEMPLATES_DIR = BASE_DIR / "trello_clon" / "templates"
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-p47c%8*id1oon=w^t6v1n0=$f3eradf&_as68!z%#jb$7au*(3"
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-insecure-p47c%8*id1oon=w^t6v1n0=$f3eradf&_as68!z%#jb$7au*(3",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True").lower() in {"1", "true", "yes"}
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get("ALLOWED_HOSTS", "*").split(",")
+    if host.strip()
+]
+_RENDER_HOST = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if _RENDER_HOST and _RENDER_HOST not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(_RENDER_HOST)
 
 
 # Application definition
@@ -94,6 +106,20 @@ DATABASES = {
     }
 }
 
+_DATABASE_URL = os.environ.get("DATABASE_URL")
+if _DATABASE_URL:
+    _url = urlparse(_DATABASE_URL)
+    DATABASES["default"] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": unquote(_url.path.lstrip("/")),
+        "USER": unquote(_url.username or ""),
+        "PASSWORD": unquote(_url.password or ""),
+        "HOST": _url.hostname or "",
+        "PORT": str(_url.port or 5432),
+        "CONN_MAX_AGE": 600,
+        "OPTIONS": {"sslmode": "require"},
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
@@ -130,6 +156,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if origin.strip()
+]
+if _RENDER_HOST:
+    _origin = f"https://{_RENDER_HOST}"
+    if _origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(_origin)
 
 
 # Email
