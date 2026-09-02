@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.views.generic.edit import CreateView
 from accounts.models import UserProfile
 from .forms import LoginForm, UserModelFormCreate
+from django.views.decorators.http import require_POST
 
 
 class HomeView(TemplateView):
@@ -55,6 +56,7 @@ class RegisterView(CreateView):
         return response
 
 
+@require_POST
 def logout_view(request):
     logout(request)
     messages.add_message(request, messages.SUCCESS, "Logout con éxito")
