@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.contrib import messages
@@ -19,19 +19,24 @@ class TaskCreateView(CreateView):
     form_class = TaskCreateForm
     template_name = "task/task_create.html"
 
+    def get_tasklist(self):
+        if not hasattr(self, "_tasklist"):
+            self._tasklist = get_object_or_404(
+                TaskList.objects.accessible_by(self.request.user).select_related(
+                    "board"
+                ),
+                pk=self.kwargs["list_pk"],
+            )
+        return self._tasklist
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        tasklist = TaskList.objects.select_related("board").get(
-            pk=self.kwargs["list_pk"]
-        )
-        kwargs["board"] = tasklist.board
+        kwargs["board"] = self.get_tasklist().board
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["tasklist"] = TaskList.objects.select_related("board").get(
-            pk=self.kwargs["list_pk"]
-        )
+        context["tasklist"] = self.get_tasklist()
         return context
 
     def form_valid(self, form):
@@ -63,7 +68,9 @@ class TaskUpdateView(UpdateView):
     context_object_name = "task"
 
     def get_queryset(self):
-        return Task.objects.select_related("task_list__board")
+        return Task.objects.accessible_by(self.request.user).select_related(
+            "task_list__board"
+        )
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -90,7 +97,9 @@ class TaskDeleteView(SuccessMessageMixin, DeleteView):
     context_object_name = "task"
 
     def get_queryset(self):
-        return Task.objects.select_related("task_list__board")
+        return Task.objects.accessible_by(self.request.user).select_related(
+            "task_list__board"
+        )
 
     def form_valid(self, form):
         # Guardar el objeto
@@ -126,7 +135,7 @@ def task_reorder(request, pk):
         return JsonResponse({"ok": False, "error": "invalid json"}, status=400)
 
     try:
-        tasklist = TaskList.objects.get(pk=pk, board__owner=request.user)
+        tasklist = TaskList.objects.accessible_by(request.user).get(pk=pk)
     except TaskList.DoesNotExist:
         return JsonResponse({"ok": False, "error": "not found"}, status=404)
 

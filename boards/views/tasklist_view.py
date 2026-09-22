@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from boards.forms import TaskListCreateForm
 from boards.models import TaskList, Board, Task
+from django.shortcuts import get_object_or_404
 
 
 @method_decorator(login_required, name="dispatch")
@@ -17,7 +18,7 @@ class TaskListDetailView(DetailView):
     context_object_name = "tasklist"
 
     def get_queryset(self):
-        return TaskList.objects.prefetch_related(
+        return TaskList.objects.accessible_by(self.request.user).prefetch_related(
             Prefetch(
                 "tasks",
                 queryset=Task.objects.order_by("position").prefetch_related("labels"),
@@ -31,16 +32,28 @@ class TaskListCreateView(CreateView):
     form_class = TaskListCreateForm
     template_name = "tasklist/tasklist_create.html"
 
+    def get_board(self):
+        if not hasattr(self, "_board"):
+            self._board = get_object_or_404(
+                Board.objects.accessible_by(self.request.user),
+                pk=self.kwargs["board_pk"],
+            )
+        return self._board
+
+    def dispatch(self, request, *args, **kwargs):
+        # 404 temprano si el board no es del usuario: cubre GET y POST
+        self.get_board()
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["board"] = Board.objects.get(pk=self.kwargs["board_pk"])
+        context["board"] = self.get_board()
         return context
 
     def form_valid(self, form):
-        form.instance.board_id = self.kwargs["board_pk"]
-        form.instance.position = (
-            TaskList.objects.filter(board_id=self.kwargs["board_pk"]).count() + 1
-        )
+        board = self.get_board()
+        form.instance.board = board
+        form.instance.position = board.lists.count() + 1
 
         response = super().form_valid(form)
         messages.add_message(
@@ -62,7 +75,7 @@ class TaskListUpdateView(UpdateView):
     context_object_name = "tasklist"
 
     def get_queryset(self):
-        return TaskList.objects.filter(board__owner=self.request.user).select_related(
+        return TaskList.objects.accessible_by(self.request.user).select_related(
             "board"
         )
 
@@ -86,7 +99,7 @@ class TaskListDeleteView(SuccessMessageMixin, DeleteView):
     context_object_name = "tasklist"
 
     def get_queryset(self):
-        return TaskList.objects.filter(board__owner=self.request.user).select_related(
+        return TaskList.objects.accessible_by(self.request.user).select_related(
             "board"
         )
 
