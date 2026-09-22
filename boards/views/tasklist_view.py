@@ -21,7 +21,9 @@ class TaskListDetailView(DetailView):
         return TaskList.objects.accessible_by(self.request.user).prefetch_related(
             Prefetch(
                 "tasks",
-                queryset=Task.objects.order_by("position").prefetch_related("labels"),
+                queryset=Task.objects.order_by("position").prefetch_related(
+                    "labels", "assignees"
+                ),
             )
         )
 

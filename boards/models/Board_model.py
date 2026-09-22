@@ -24,3 +24,13 @@ class Board(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_assignable_users(self):
+        """Usuarios que pueden quedar asignados a una tarea de este tablero.
+
+        El dueño entra por su membership (la crea la signal al crear el board),
+        así los miembros son una sola lista y no dos fuentes.
+        """
+        return UserProfile.objects.filter(
+            board_memberships__board=self
+        ).order_by("username")

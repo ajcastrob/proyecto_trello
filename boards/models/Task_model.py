@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from .TaskList_model import TaskList
@@ -21,6 +22,9 @@ class Task(models.Model):
     description = models.TextField(verbose_name="descripción", blank=True)
     position = models.PositiveIntegerField(verbose_name="posición", default=0)
     labels = models.ManyToManyField("Label", blank=True, related_name="tasks")
+    assignees = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, blank=True, related_name="assigned_tasks"
+    )
     priority = models.CharField(
         verbose_name="prioridad", choices=PRIORITY, default="medium", max_length=10
     )

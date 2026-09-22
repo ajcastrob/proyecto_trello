@@ -37,6 +37,40 @@
       </div>
     </header>
 
+    {# ── Miembros ── #}
+    <section class="mb-8 flex flex-wrap items-center gap-2" aria-label="Miembros del tablero">
+      <span class="text-[11px] font-semibold uppercase tracking-wide text-faint">Miembros</span>
+      {% for membership in board.memberships.all %}
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-line bg-white py-1 pl-1 pr-2.5">
+          <span
+            class="inline-flex size-6 items-center justify-center overflow-hidden rounded-full bg-surface-2 text-[10px] font-semibold text-ink"
+            title="{{ membership.user.username }}"
+          >
+            {% if membership.user.profile_picture %}
+              <img src="{{ membership.user.profile_picture.url }}" alt="{{ membership.user.username }}" class="size-full object-cover">
+            {% else %}
+              {{ membership.user.username|slice:":1"|upper }}
+            {% endif %}
+          </span>
+          <span class="text-xs text-muted">{{ membership.user.username }}{% if membership.role == 'owner' %} · dueño{% endif %}</span>
+          {% if board.owner == request.user and membership.role != 'owner' %}
+            <a
+              href="{% url 'board:member_delete' membership.pk %}"
+              class="text-sm leading-none text-faint transition-colors duration-150 hover:text-danger"
+              aria-label="Quitar a {{ membership.user.username }}"
+              title="Quitar del tablero"
+            >×</a>
+          {% endif %}
+        </span>
+      {% endfor %}
+      {% if board.owner == request.user %}
+        <a
+          href="{% url 'board:member_create' board.pk %}"
+          class="inline-flex items-center rounded-full border border-dashed border-line px-3 py-1.5 text-xs font-medium text-muted transition-colors duration-150 hover:border-brand/40 hover:text-brand-deep focus:outline-none"
+        >+ Invitar</a>
+      {% endif %}
+    </section>
+
     {# ── Lists grid ── #}
     {% if board.lists.all %}
       <ul
@@ -115,6 +149,9 @@
                         <span class="mt-1.5 block">{% include "_includes/_due_date.html" with task=task %}</span>
                       {% endif %}
                       <span class="mt-1.5 flex flex-wrap gap-1">{% include "_includes/_label_chips.html" with task=task %}</span>
+                      {% if task.assignees.all %}
+                        <span class="mt-1.5 flex flex-wrap items-center gap-1">{% include "_includes/_assignees.html" with task=task %}</span>
+                      {% endif %}
                       {% if task.description %}
                         <span class="mt-1 block line-clamp-1 text-xs leading-relaxed text-muted">{{ task.description }}</span>
                       {% endif %}

@@ -6,6 +6,8 @@ from ..views import (
     BoardCreateView,
     BoardUpdateView,
     BoardDeleteView,
+    MembershipCreateView,
+    MembershipDeleteView,
     board_reorder,
 )
 
@@ -18,4 +20,10 @@ urlpatterns = [
     path("update/<pk>/", BoardUpdateView.as_view(), name="update"),
     path("delete/<pk>/", BoardDeleteView.as_view(), name="delete"),
     path("details/<pk>/reorder/", board_reorder, name="reorder"),
+    path(
+        "details/<int:board_pk>/members/create/",
+        MembershipCreateView.as_view(),
+        name="member_create",
+    ),
+    path("members/<pk>/delete/", MembershipDeleteView.as_view(), name="member_delete"),
 ]

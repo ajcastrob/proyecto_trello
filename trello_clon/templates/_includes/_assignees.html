@@ -1,0 +1,12 @@
+{% for user in task.assignees.all %}
+  <span
+    class="inline-flex size-6 items-center justify-center overflow-hidden rounded-full border border-line bg-surface-2 text-[10px] font-semibold text-ink"
+    title="{{ user.username }}"
+  >
+    {% if user.profile_picture %}
+      <img src="{{ user.profile_picture.url }}" alt="{{ user.username }}" class="size-full object-cover">
+    {% else %}
+      {{ user.username|slice:":1"|upper }}
+    {% endif %}
+  </span>
+{% endfor %}

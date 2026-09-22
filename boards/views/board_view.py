@@ -33,13 +33,14 @@ class BoardDetailView(DetailView):
 
     def get_queryset(self):
         return Board.objects.accessible_by(self.request.user).prefetch_related(
+            "memberships__user",
             Prefetch(
                 "lists",
                 queryset=TaskList.objects.order_by("position").prefetch_related(
                     Prefetch(
                         "tasks",
                         queryset=Task.objects.order_by("position").prefetch_related(
-                            "labels"
+                            "labels", "assignees"
                         ),
                     )
                 ),
@@ -76,7 +77,8 @@ class BoardUpdateView(UpdateView):
     context_object_name = "boards"
 
     def get_queryset(self):
-        return Board.objects.accessible_by(self.request.user)
+        # Administrar el tablero es solo del dueno: un miembro lo ve, no lo edita
+        return Board.objects.owned_by(self.request.user)
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -98,7 +100,7 @@ class BoardDeleteView(SuccessMessageMixin, DeleteView):
     context_object_name = "board"
 
     def get_queryset(self):
-        return Board.objects.accessible_by(self.request.user)
+        return Board.objects.owned_by(self.request.user)
 
     def form_valid(self, form):
         response = super().form_valid(form)

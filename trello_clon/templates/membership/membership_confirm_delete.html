@@ -1,0 +1,14 @@
+{% extends "core/layout.html" %}
+
+{% block head_title %}Quitar miembro · TaskApp{% endblock %}
+{% block head_h1 %}Quitar miembro{% endblock %}
+
+{% block page_content %}
+  <div class="mx-auto w-full max-w-xl">
+
+    {% include "_includes/_breadcrumbs.html" with current="Quitar miembro" board=membership.board %}
+    {% url 'board:detail' membership.board.pk as my_url %}
+    {% include "_includes/_confirm_delete.html" with title="Quitar a "|add:membership.user.username description="Deja de ver el tablero y deja de estar asignado en sus tareas. Lo puedes invitar de nuevo cuando quieras." link=my_url button="Quitar del tablero" %}
+
+  </div>
+{% endblock %}
