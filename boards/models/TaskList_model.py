@@ -1,8 +1,11 @@
 from django.db import models
 from .Board_model import Board
+from .managers import TaskListQuerySet
 
 
 class TaskList(models.Model):
+    objects = TaskListQuerySet.as_manager()
+
     board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name="lists")
     title = models.CharField(
         max_length=120,

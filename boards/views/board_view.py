@@ -22,7 +22,7 @@ class BoardListView(ListView):
     context_object_name = "boards"
 
     def get_queryset(self):
-        return Board.objects.filter(owner=self.request.user)
+        return Board.objects.accessible_by(self.request.user)
 
 
 @method_decorator(login_required, name="dispatch")
@@ -32,7 +32,7 @@ class BoardDetailView(DetailView):
     context_object_name = "board"
 
     def get_queryset(self):
-        return Board.objects.prefetch_related(
+        return Board.objects.accessible_by(self.request.user).prefetch_related(
             Prefetch(
                 "lists",
                 queryset=TaskList.objects.order_by("position").prefetch_related(
@@ -76,7 +76,7 @@ class BoardUpdateView(UpdateView):
     context_object_name = "boards"
 
     def get_queryset(self):
-        return Board.objects.filter(owner=self.request.user)
+        return Board.objects.accessible_by(self.request.user)
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -98,7 +98,7 @@ class BoardDeleteView(SuccessMessageMixin, DeleteView):
     context_object_name = "board"
 
     def get_queryset(self):
-        return Board.objects.filter(owner=self.request.user)
+        return Board.objects.accessible_by(self.request.user)
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -129,8 +129,8 @@ def board_reorder(request, pk):
         return JsonResponse({"ok": False, "error": "invalid json"}, status=400)
 
     for i, list_id in enumerate(order, start=1):
-        TaskList.objects.filter(
-            pk=list_id, board__owner=request.user, board__pk=pk
+        TaskList.objects.accessible_by(request.user).filter(
+            pk=list_id, board__pk=pk
         ).update(position=i)
 
     return JsonResponse({"ok": True})

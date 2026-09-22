@@ -1,8 +1,11 @@
 from accounts.models import UserProfile
 from django.db import models
+from .managers import BoardQuerySet
 
 
 class Board(models.Model):
+    objects = BoardQuerySet.as_manager()
+
     title = models.CharField(verbose_name="Nombre del dashboard", max_length=120)
     description = models.TextField(verbose_name="Descripción", blank=True)
     owner = models.ForeignKey(

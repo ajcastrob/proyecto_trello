@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from .TaskList_model import TaskList
+from .managers import TaskQuerySet
 
 PRIORITY = [
     ("low", "Baja"),
@@ -11,6 +12,8 @@ PRIORITY = [
 
 
 class Task(models.Model):
+    objects = TaskQuerySet.as_manager()
+
     task_list = models.ForeignKey(
         TaskList, on_delete=models.CASCADE, related_name="tasks"
     )
